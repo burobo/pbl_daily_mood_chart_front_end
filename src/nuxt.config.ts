@@ -4,7 +4,7 @@ export default defineNuxtConfig({
         preset: "aws-lambda",
         serveStatic: true,
     },    
-    runtimeConfig: {
+    publicRuntimeConfig: {
         API_BASE_URL: process.env.API_BASE_URL,
     },
     css: ["bootstrap/dist/css/bootstrap.min.css"],

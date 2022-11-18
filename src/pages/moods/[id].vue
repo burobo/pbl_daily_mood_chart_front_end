@@ -17,7 +17,7 @@ export default {
       const config = useRuntimeConfig()
       const { data, pending, error, refresh } = await useFetch("/", {
         method: "POST",
-        baseURL: config.API_BASE_URL,
+        baseURL: config.public.API_BASE_URL,
         body: {
           user_id: "19103",
           date: this.targetDate,
@@ -29,7 +29,7 @@ export default {
       const config = useRuntimeConfig()
       const { data, pending, error, refresh } = await useFetch("/", {
         method: "DELETE",
-        baseURL: config.API_BASE_URL,
+        baseURL: config.public.API_BASE_URL,
         body: {
           user_id: "19103",
           date: this.targetDate,
