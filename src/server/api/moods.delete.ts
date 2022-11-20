@@ -9,5 +9,8 @@ export default defineEventHandler(async (event) => {
     baseURL: config.public.API_BASE_URL,
     body: reqBody,
   })
-  return { data, pending, error, refresh }
+  if (error) {
+    console.log(error)
+  }
+  return data | error
 })
