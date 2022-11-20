@@ -9,7 +9,7 @@ nuxi build
 #### samでデプロイ
 ```
 cd dmc-front-sam-app
-cp ../src/.output ./nuxt-output
+cp -r ../src/.output ./nuxt-output
 sam build
 sam deploy
 ```
