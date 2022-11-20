@@ -15,21 +15,21 @@ export default {
     },
     async upsertMood() {
       const config = useRuntimeConfig()
-      const { data, pending, error, refresh } = await useFetch("/", {
+      const { data, pending, error, refresh } = await useFetch("/moods", {
         method: "POST",
-        baseURL: config.public.API_BASE_URL,
+        baseURL: config.public.API_PROXY_BASE_URL,
         body: {
           user_id: "19103",
           date: this.targetDate,
           mood: this.mood.toString(),
         },
-      });
+      })
     },
     async deleteMood() {
       const config = useRuntimeConfig()
-      const { data, pending, error, refresh } = await useFetch("/", {
+      const { data, pending, error, refresh } = await useFetch("/moods", {
         method: "DELETE",
-        baseURL: config.public.API_BASE_URL,
+        baseURL: config.public.API_PROXY_BASE_URL,
         body: {
           user_id: "19103",
           date: this.targetDate,
