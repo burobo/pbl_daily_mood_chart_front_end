@@ -4132,7 +4132,7 @@ vue-router@^4.1.5:
   dependencies:
     "@vue/devtools-api" "^6.4.5"
 
-vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.0.5, vue@^3.2.0, vue@^3.2.25, vue@^3.2.41, "vue@>=2.7 || >=3", vue@3.2.41:
+vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.2.0, vue@^3.2.25, vue@^3.2.41, "vue@>=2.7 || >=3", vue@3.2.41:
   version "3.2.41"
   resolved "https://registry.npmjs.org/vue/-/vue-3.2.41.tgz"
   integrity sha512-uuuvnrDXEeZ9VUPljgHkqB5IaVO8SxhPpqF2eWOukVrBnRBx2THPSGQBnVRt0GrIG1gvCmFXMGbd7FqcT1ixNQ==
@@ -4142,13 +4142,6 @@ vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.0.5, vue@^3.2.0, vue@^3.2.25, vue@^
     "@vue/runtime-dom" "3.2.41"
     "@vue/server-renderer" "3.2.41"
     "@vue/shared" "3.2.41"
-
-vue3-timepicker@^1.0.0-beta.2:
-  version "1.0.0-beta.2"
-  resolved "https://registry.npmjs.org/vue3-timepicker/-/vue3-timepicker-1.0.0-beta.2.tgz"
-  integrity sha512-j4IVU7PPLrO5HADspv1E+tXTkMc9gWfCu/ruwJqJdX7qugAaVk3yNF7Mj4icRGlU4uKeSohlXWA8/Uj1ePiTxQ==
-  dependencies:
-    vue "^3.0.5"
 
 wcwidth@^1.0.1:
   version "1.0.1"
