@@ -20,7 +20,14 @@ export default {
         // Each Column Definition results in one Column.
         const columnDefs = [
             { field: "日付" },
-            { field: "気分" },
+            {
+                field: "気分",
+                editable: true,
+                cellEditor: 'agSelectCellEditor',
+                cellEditorParams: {
+                    values: ['😄', '😃', '😐', '🙁', '😢']
+                }
+            },
             { field: "就寝" },
             { field: "起床" },
             { field: "実睡眠" },
