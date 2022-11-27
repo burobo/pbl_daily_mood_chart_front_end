@@ -1,67 +1,90 @@
 <template>
-    <h1>生活記録表</h1>
-    <ag-grid-vue
-      class="ag-theme-alpine"
-      style="height: 500px"
-      :columnDefs="columnDefs"
-      :rowData="rowData"
-      :defaultColDef="defaultColDef"
-      rowSelection="multiple"
-      animateRows="true"
-    >
-    </ag-grid-vue>
+  <h1>生活記録表</h1>
+  <select v-model="targetYearRef" @change="refreshTableRows">
+    <option v-for="n in [2, 1, 0]" v-bind:value="new Date().getFullYear() - n">
+      {{ new Date().getFullYear() - n }}年
+    </option>
+  </select>
+  <select v-model="targetMonthRef" @change="refreshTableRows">
+    <option v-for="n in 12" v-bind:value="n">{{ n }}月</option>
+  </select>
+  <ag-grid-vue
+    class="ag-theme-alpine"
+    :domLayout="domLayout"
+    :columnDefs="columnDefs"
+    :rowData="logsData"
+    :colDef="colDef"
+    rowSelection="multiple"
+    animateRows="true"
+    @first-data-rendered="onFirstDataRendered"
+  >
+  </ag-grid-vue>
 </template>
 
-<script>
-   import { AgGridVue } from "ag-grid-vue3";  // the AG Grid Vue Component
+<script setup>
+import { AgGridVue } from "ag-grid-vue3"; // the AG Grid Vue Component
+import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
+import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
 
-   import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
-   import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
+const config = useRuntimeConfig();
+const targetYearRef = ref(new Date().getFullYear());
+const targetMonthRef = ref(new Date().getMonth() + 1);
+const domLayout = "autoHeight";
+const columnDefs = [
+  { field: "日付" },
+  { field: "気分" },
+  { field: "就寝" },
+  { field: "起床" },
+  { field: "実睡眠" },
+  { field: "他睡眠" },
+  { field: "睡眠計" },
+];
+const colDef = {
+  sortable: true,
+  filter: true,
+  flex: 1,
+};
 
-   export default {
-    name: "App",
-    components: {
-      AgGridVue,
+const { data: logsData, pending, error, refresh: refreshTableRows } = await useFetch(
+  "/logs",
+  {
+    method: "POST",
+    baseURL: config.public.API_PROXY_BASE_URL,
+    body: {
+      user_id: "1",
     },
-    setup() {
-      // Each Column Definition results in one Column.
-      const columnDefs = [
-        { field: "日付" },
-        { field: "気分" },
-        { field: "就寝" },
-        { field: "起床" },
-        { field: "実睡眠" },
-        { field: "他睡眠" },
-        { field: "睡眠計" }
-      ];
-
-      // Example load data from sever
-      const rowData = [
-        { "日付": "11月16日", "気分": "😄", "就寝": "18:16", "起床": "4:16", "実睡眠": "9:34", "他睡眠": "0:00", "睡眠計": "9:34" },
-        { "日付": "11月17日", "気分": "😄", "就寝": "21:24", "起床": "4:16", "実睡眠": "9:34", "他睡眠": "0:00", "睡眠計": "9:34" },
-        { "日付": "11月18日", "気分": "😄", "就寝": "21:57", "起床": "4:16", "実睡眠": "9:34", "他睡眠": "0:00", "睡眠計": "9:34" },
-        { "日付": "11月19日", "気分": "😢", "就寝": "23:24", "起床": "4:16", "実睡眠": "9:34", "他睡眠": "0:00", "睡眠計": "9:34" },
-        { "日付": "11月20日", "気分": "😄", "就寝": "23:20", "起床": "4:16", "実睡眠": "9:34", "他睡眠": "0:00", "睡眠計": "9:34" },
-        { "日付": "11月21日", "気分": "😄", "就寝": "21:24", "起床": "4:16", "実睡眠": "9:34", "他睡眠": "0:00", "睡眠計": "9:34" },
-        { "日付": "11月22日", "気分": "😄", "就寝": "21:57", "起床": "4:16", "実睡眠": "9:34", "他睡眠": "0:00", "睡眠計": "9:34" },
-        { "日付": "11月23日", "気分": "😢", "就寝": "23:24", "起床": "4:16", "実睡眠": "9:34", "他睡眠": "0:00", "睡眠計": "9:34" },
-        { "日付": "11月24日", "気分": "😄", "就寝": "23:20", "起床": "4:16", "実睡眠": "9:34", "他睡眠": "0:00", "睡眠計": "9:34" }
-      ]
-
-      // DefaultColDef sets props common to all Columns
-      const defaultColDef = {
-        sortable: true,
-        filter: true,
-        flex: 1
-      };
-
-      return {
-        columnDefs,
-        rowData,
-        defaultColDef
-      };
+    async onRequest({ request, options }) {
+      options.body.start_date = formatDateForRequest(
+        startDateOfYearMonth(targetYearRef.value, targetMonthRef.value)
+      );
+      options.body.end_date = formatDateForRequest(
+        endDateOfYearMonth(targetYearRef.value, targetMonthRef.value)
+      );
     },
-   };
+  }
+);
+
+function startDateOfYearMonth(year, month) {
+  return new Date(year, Number(month) - 1, 1);
+}
+
+function endDateOfYearMonth(year, month) {
+  const startDateOfMonth = startDateOfYearMonth(year, month);
+  return new Date(year, startDateOfMonth.getMonth() + 1, 0);
+}
+
+function formatDateForRequest(date) {
+  return `${date.getFullYear()}${zeroPadding(2, date.getMonth() + 1)}${zeroPadding(
+    2,
+    date.getDate()
+  )}`;
+}
+
+function zeroPadding(digit, str) {
+  return ("0".repeat(digit) + str).slice(-digit);
+}
+
+function onFirstDataRendered(params) {
+  params.api.sizeColumnsToFit()
+}
 </script>
-
-<style lang="scss"></style>
