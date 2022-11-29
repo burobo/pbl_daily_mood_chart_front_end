@@ -1,5 +1,5 @@
 <template>
-    <h1>生活記録表</h1>
+    <h1>睡眠分析表</h1>
     <p>※<strong>実睡眠時間</strong>:体が完全に安静な状態の時間</p>
     <p>※<strong>睡眠時間</strong>:ベッドにいた時間</p>
     <p>※<strong>睡眠効率</strong>:実睡眠時間 / 睡眠時間×100</p>
