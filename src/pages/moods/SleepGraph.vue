@@ -1,5 +1,8 @@
 <template>
     <h1>生活記録表</h1>
+    <p>※<strong>実睡眠時間</strong>:体が完全に安静な状態の時間</p>
+    <p>※<strong>睡眠時間</strong>:ベッドにいた時間</p>
+    <p>※<strong>睡眠効率</strong>:実睡眠時間 / 睡眠時間×100</p>
     <ag-grid-vue class="ag-theme-alpine" style="height: 500px" :columnDefs="columnDefs" :rowData="rowData"
         :defaultColDef="defaultColDef" rowSelection="multiple" animateRows="true">
     </ag-grid-vue>
