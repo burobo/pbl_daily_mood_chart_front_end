@@ -1,8 +1,11 @@
 <template>
     <h1>睡眠分析表</h1>
-    <p>※<strong>実睡眠時間</strong>:体が完全に安静な状態の時間</p>
-    <p>※<strong>睡眠時間</strong>:ベッドにいた時間</p>
-    <p>※<strong>睡眠効率</strong>:実睡眠時間 / 睡眠時間×100</p>
+    <div class="border mb-5"></div>
+    <div class="mb-2">
+        <small class="me-3"><strong>※実睡眠時間</strong>：体が完全に安静な状態の時間</small>
+        <small class="me-3"><strong>※睡眠時間</strong>：ベッドにいた時間</small>
+        <small><strong>※睡眠効率</strong>：実睡眠時間 / 睡眠時間×100</small>
+    </div>
     <ag-grid-vue class="ag-theme-alpine" style="height: 500px" :columnDefs="columnDefs" :rowData="rowData"
         :defaultColDef="defaultColDef" rowSelection="multiple" animateRows="true">
     </ag-grid-vue>
