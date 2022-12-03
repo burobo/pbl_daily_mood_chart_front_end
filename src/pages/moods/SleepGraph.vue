@@ -8,7 +8,7 @@
     </ag-grid-vue>
 </template>
 
-<style module>
+<style>
 .ag-header-cell {
     padding-right: 0 !important;
     padding-left: 16px !important;
@@ -24,13 +24,6 @@ import { AgGridVue } from "ag-grid-vue3";  // the AG Grid Vue Component
 
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
-
-// Import minimal modules required for charts
-import { ModuleRegistry } from "@ag-grid-community/core";
-import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
-import { GridChartsModule } from "@ag-grid-enterprise/charts";
-
-ModuleRegistry.registerModules([ClientSideRowModelModule, GridChartsModule]);
 
 export default {
     name: "SleepGraph",
