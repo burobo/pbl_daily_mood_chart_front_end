@@ -269,7 +269,6 @@ async function fetchDailyMood() {
           return
         }
         selectedMoodRef.value = response._data[0].mood;
-        console.log(response._data[0])
         sleepRecordsRef.value = response._data[0].sleeps.length === 0 ? [] : response._data[0].sleeps.map(sleep => 
           new SleepRecord(
             new Date(sleep.sleep_start_time.replace(' ', 'T')),
