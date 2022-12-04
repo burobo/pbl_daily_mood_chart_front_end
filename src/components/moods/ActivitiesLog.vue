@@ -1,5 +1,5 @@
 <template>
-    <h1>睡眠表</h1>
+    <h1>生活記録表</h1>
     <div class="border mb-5"></div>
     <div class="mb-2">
         <small class="me-3"><strong>※実睡眠時間</strong>：体が完全に安静な状態の時間</small>
@@ -17,7 +17,7 @@ import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
 
 export default {
-    name: "SleepTable",
+    name: "ActivitiesLog",
     components: {
         AgGridVue,
     },

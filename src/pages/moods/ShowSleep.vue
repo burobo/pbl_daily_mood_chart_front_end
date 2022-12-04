@@ -1,14 +1,14 @@
 <template>
     <ul class="tabnav">
         <li @click="isActive = 'table'" :class="{ 'active': isActive === 'table' }">
-            睡眠表
+            生活記録表
         </li>
         <li @click="isActive = 'graph'" :class="{ 'active': isActive === 'graph' }">
             睡眠グラフ
         </li>
     </ul>
     <div v-if="isActive === 'table'">
-        <SleepTable></SleepTable>
+        <ActivitiesLog></ActivitiesLog>
     </div>
     <div v-else-if="isActive === 'graph'">
         <SleepGraph></SleepGraph>
@@ -37,14 +37,14 @@
 </style>
 
 <script>
-import SleepTable from '../../components/moods/SleepTable.vue'
+import ActivitiesLog from '../../components/moods/ActivitiesLog.vue'
 import SleepGraph from '../../components/moods/SleepGraph.vue';
 import { ref } from 'vue';
 
 export default {
     name: "ShowSleep",
     components: {
-        SleepTable,
+        ActivitiesLog,
         SleepGraph
     },
     setup() {
