@@ -8,13 +8,7 @@
         </li>
     </ul>
     <div v-if="isActive === 'table'">
-        <h1>睡眠表</h1>
-        <div class="border mb-5"></div>
-        <div class="mb-2">
-            <small class="me-3"><strong>※実睡眠時間</strong>：体が完全に安静な状態の時間</small>
-            <small class="me-3"><strong>※睡眠時間</strong>：ベッドにいた時間</small>
-            <small><strong>※睡眠効率</strong>：実睡眠時間 / 睡眠時間×100</small>
-        </div>
+        <SleepTable></SleepTable>
     </div>
     <div v-else-if="isActive === 'graph'">
         <SleepGraph></SleepGraph>
@@ -43,12 +37,14 @@
 </style>
 
 <script>
+import SleepTable from '../../components/moods/SleepTable.vue'
 import SleepGraph from '../../components/moods/SleepGraph.vue';
 import { ref } from 'vue';
 
 export default {
     name: "ShowSleep",
     components: {
+        SleepTable,
         SleepGraph
     },
     setup() {
