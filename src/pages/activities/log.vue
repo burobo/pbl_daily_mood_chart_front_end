@@ -37,8 +37,8 @@
 </style>
 
 <script>
-import ActivitiesLog from '../../components/moods/ActivitiesLog.vue'
-import SleepGraph from '../../components/moods/SleepGraph.vue';
+import ActivitiesLog from '../../components/ActivitiesLog.vue'
+import SleepGraph from '../../components/SleepGraph.vue';
 import { ref } from 'vue';
 
 export default {
