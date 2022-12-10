@@ -1,19 +1,4 @@
 <template>
-    <h1>生活記録表</h1>
-    <div class="border mb-5"></div>
-    <div class="mb-2">
-        <small class="me-3"><strong>※実睡眠時間</strong>：体が完全に安静な状態の時間</small>
-        <small class="me-3"><strong>※睡眠時間</strong>：ベッドにいた時間</small>
-        <small><strong>※睡眠効率</strong>：実睡眠時間 / 睡眠時間×100</small>
-    </div>
-    <select v-model="targetYearRef" @change="tableRowsRefresh">
-        <option v-for="n in [2, 1, 0]" v-bind:value="new Date().getFullYear() - n">
-            {{ new Date().getFullYear() - n }}年
-        </option>
-    </select>
-    <select v-model="targetMonthRef" @change="tableRowsRefresh">
-        <option v-for="n in 12" v-bind:value="n">{{ n }}月</option>
-    </select>
     <ag-grid-vue class="ag-theme-alpine" style="height: 500px" :domLayout="domLayout" :columnDefs="columnDefs"
         :rowData="rowData" :defaultColDef="defaultColDef" rowSelection="multiple" animateRows="true"
         @first-data-rendered="onFirstDataRendered" @rowClicked="onRowClicked">
@@ -101,6 +86,7 @@
 import { AgGridVue } from "ag-grid-vue3"; // the AG Grid Vue Component
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
+import { inject, watch } from 'vue'
 
 class SleepRecord {
     constructor(sleepStartTime, sleepEndTime) {
@@ -117,8 +103,8 @@ class SleepRecord {
 
 const { $bootstrap } = useNuxtApp();
 const config = useRuntimeConfig();
-const targetYearRef = ref(new Date().getFullYear());
-const targetMonthRef = ref(new Date().getMonth() + 1);
+const targetYearRef = inject('targetYearRef');
+const targetMonthRef = inject('targetMonthRef');
 const selectedDateRef = ref(new Date());
 const selectedMoodRef = ref(null);
 const sleepRecordsRef = ref([]);
@@ -279,6 +265,10 @@ function removeSleepRecord(idx) {
     copiedSleepRecord.splice(idx, 1)
     sleepRecordsRef.value = copiedSleepRecord
 }
+
+watch(targetYearRef,tableRowsRefresh);
+watch(targetMonthRef,tableRowsRefresh);
+
 </script>
 
 <style lang="scss">
