@@ -129,13 +129,14 @@ const memoRef = ref("")
 
 const sumSleepMinutes = computed(() => sleepRecoredsRefWrap.sleepRecordsRef.value.reduce((a, c) => a + c.sleepMinutes(), 0))
 const actualSleepMinutes = computed(() => actualSleepMinutesRef.value === null ? "-" : actualSleepMinutesRef.value)
-const sleepEfficiency = computed(() => sumSleepMinutes.value === 0 ? "-" : (actualSleepMinutesRef.value / sumSleepMinutes.value) * 100)
+const sleepEfficiency = computed(() => sumSleepMinutes.value === 0 ? "-" : ((actualSleepMinutesRef.value / sumSleepMinutes.value) * 100).toFixed(2))
 
 let modal = null;
 const domLayout = "autoHeight";
 const columnDefs = [
     { field: "日付" },
     { field: "気分" },
+    { field: "メモ" },
     { field: "実睡眠時間" },
     { field: "睡眠時間" },
     { field: "睡眠効率" }
