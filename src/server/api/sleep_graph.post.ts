@@ -81,6 +81,8 @@ function formatYYYYMMDDToJSDate(date) {
 function hoursBetween(startDate, endDate) {
     const current = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), startDate.getHours())
     const hours = []
+    // 30分未満の睡眠は睡眠グラフに反映しない
+    if((endDate.getTime()-startDate.getTime()) / (60 * 1000) < 30) return hours
     while(current.getTime() <= endDate.getTime()) {
         hours.push(new Date(current.getFullYear(), current.getMonth(), current.getDate(), current.getHours()))
         current.setHours(current.getHours() + 1)
