@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
 function formatReponse(res, startDate, endDate) {
     return datesBetween(formatYYYYMMDDToJSDate(startDate), formatYYYYMMDDToJSDate(endDate)).map(date => {
         const formatted = {
-            "日付": `${date.getMonth() + 1}月${date.getDate()}日`,
+            "日付": `${date.getMonth() + 1}/${date.getDate()}`,
             "気分": "",
             "就寝": "",
             "起床": "",
@@ -40,7 +40,7 @@ function formatReponse(res, startDate, endDate) {
         }
         const mainSleepMinutes = rowInRes.main_sleep ? Number(rowInRes.main_sleep.minutes_a_sleep): 0;
         const napTimeMinutes = rowInRes.nap_time ? rowInRes.nap_time.reduce((a, c) =>  a + Number(c.minutes_a_sleep), 0) : 0;
-        formatted.日付 = `${date.getMonth() + 1}月${date.getDate()}日`
+        formatted.日付 = `${date.getMonth() + 1}/${date.getDate()}`
         formatted.気分 = ["😢","🙁","😐","😃","😄"][Number(rowInRes.mood)] || ""
         formatted.就寝 = rowInRes.main_sleep ? rowInRes.main_sleep.sleep_start_time.slice(-5) : ""
         formatted.起床 = rowInRes.main_sleep ? rowInRes.main_sleep.sleep_end_time.slice(-5) : ""

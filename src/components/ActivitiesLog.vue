@@ -8,7 +8,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">
-                        {{ `${selectedDateRef.getMonth() + 1}月${selectedDateRef.getDate()}日` }}
+                        {{ `${selectedDateRef.getMonth() + 1}/${selectedDateRef.getDate()}` }}
                     </h5>
                     <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>

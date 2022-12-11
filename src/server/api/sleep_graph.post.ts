@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
             }).flat();
             res = datesBetween(formatYYYYMMDDToJSDate(reqBody.start_date), formatYYYYMMDDToJSDate(reqBody.end_date)).map(date=>{
                 const format = {
-                    "日付":`${date.getMonth() + 1}月${date.getDate()}日`,
+                    "日付":`${date.getMonth() + 1}/${date.getDate()}`,
                     "0" :"",
                     "1" :"",
                     "2" :"",
