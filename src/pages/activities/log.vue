@@ -15,18 +15,18 @@
         <option v-for="n in 12" v-bind:value="n">{{ n }}月</option>
     </select>
     <ul class="tabnav">
-        <li @click="isActive = 'table'" :class="{ 'active': isActive === 'table' }">
+        <li @click="activeTab = 'table'" :class="{ 'active': activeTab === 'table' }">
             生活記録表
         </li>
-        <li @click="isActive = 'graph'" :class="{ 'active': isActive === 'graph' }">
+        <li @click="activeTab = 'graph'" :class="{ 'active': activeTab === 'graph' }">
             睡眠グラフ
         </li>
     </ul>
-    <div v-if="isActive === 'table'">
-        <ActivitiesLog></ActivitiesLog>
+    <div v-if="activeTab === 'table'">
+        <ActivitiesLog/>
     </div>
-    <div v-else-if="isActive === 'graph'">
-        <SleepGraph></SleepGraph>
+    <div v-if="activeTab === 'graph'">
+        <SleepGraph/>
     </div>
 </template>
 
@@ -56,10 +56,11 @@ import { ref, provide } from 'vue'
 
 const targetYearRef = ref(new Date().getFullYear());
 const targetMonthRef = ref(new Date().getMonth() + 1);
-const isActive = ref('table')
+const activeTab = ref('table')
 
 provide('targetYearRef', targetYearRef)
 provide('targetMonthRef', targetMonthRef)
+
 </script>
 
 <style lang="scss">

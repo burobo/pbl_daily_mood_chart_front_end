@@ -254,6 +254,7 @@ onMounted(() => {
     const moodInputModal = document.getElementById("mood-input-modal");
     modal = new $bootstrap.Modal(moodInputModal);
     moodInputModal.addEventListener('hidden.bs.modal', tableRowsRefresh)
+    tableRowsRefresh() 
 });
 
 function addSleepRecord() {
