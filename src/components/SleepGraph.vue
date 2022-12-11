@@ -106,7 +106,6 @@ function zeroPadding(digit, str) {
 watch(targetYearRef,tableRowsRefresh);
 watch(targetMonthRef,tableRowsRefresh);
 onMounted(() => {
-    console.log('onMounted')
     tableRowsRefresh()
 })
 </script>
