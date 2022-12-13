@@ -52,8 +52,6 @@
 </style>
 
 <script setup>
-import ActivitiesLog from '../../components/ActivitiesLog.vue'
-import SleepGraph from '../../components/SleepGraph.vue';
 import { ref, provide } from 'vue'
 
 const targetYearRef = ref(new Date().getFullYear());
