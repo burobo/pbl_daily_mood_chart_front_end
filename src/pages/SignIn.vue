@@ -21,7 +21,8 @@ async function main() {
             'scope': 'heartrate',
         }
         const urlSearchParam = new URLSearchParams(params).toString();
-        process.browser ? location.href = "https://www.fitbit.com/oauth2/authorize/?" + urlSearchParam : ''
+        const redirectUrl = "https://www.fitbit.com/oauth2/authorize/?" + urlSearchParam
+        window.location.href = redirectUrl
     } catch (err) {
         console.error(err)
     }
