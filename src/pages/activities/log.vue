@@ -36,25 +36,12 @@
 }
 </style>
 
-<script>
+<script setup>
 import ActivitiesLog from '../../components/ActivitiesLog.vue'
 import SleepGraph from '../../components/SleepGraph.vue';
 import { ref } from 'vue';
 
-export default {
-    name: "ShowSleep",
-    components: {
-        ActivitiesLog,
-        SleepGraph
-    },
-    setup() {
-        const isActive = ref('table')
-
-        return {
-            isActive
-        };
-    },
-};
+const isActive = ref('table')
 </script>
 
 <style lang="scss">
