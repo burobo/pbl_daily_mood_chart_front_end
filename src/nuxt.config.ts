@@ -7,6 +7,8 @@ export default defineNuxtConfig({
     publicRuntimeConfig: {
         API_PROXY_BASE_URL: "/api",
         API_BASE_URL: process.env.API_BASE_URL,
+        FITBIT_CLIENT_ID: process.env.FITBIT_CLIENT_ID,
+        FITBIT_CLIENT_SECRET: process.env.FITBIT_CLIENT_SECRET
     },
     css: ["bootstrap/dist/css/bootstrap.min.css"],
     pages: true,
