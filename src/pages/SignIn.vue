@@ -20,7 +20,7 @@ async function main() {
             'scope': 'heartrate',
         }
         const urlSearchParam = new URLSearchParams(params).toString();
-        location.href = "https://www.fitbit.com/oauth2/authorize/?" + urlSearchParam
+        process.browser ? location.href = "https://www.fitbit.com/oauth2/authorize/?" + urlSearchParam : ''
     } catch (err) {
         console.error(err)
     }
