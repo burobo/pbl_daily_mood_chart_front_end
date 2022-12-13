@@ -11,9 +11,10 @@ async function main() {
         let N = 16
         const verifier = base64UrlEncode(Array.from(Array(N)).map(() => S[Math.floor(Math.random() * S.length)]).join(''))
         const challenge = base64UrlEncode(sha256Hash(Buffer.from(verifier)))
+        const config = useRuntimeConfig();
 
         const params = {
-            'client_id': process.env.FITBIT_CLIENT_ID,
+            'client_id': config.FITBIT_CLIENT_ID,
             'response_type': 'code',
             'code_challenge': challenge,
             'code_challenge_method': 'S256',
