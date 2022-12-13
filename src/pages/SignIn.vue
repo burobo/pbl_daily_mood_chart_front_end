@@ -12,19 +12,15 @@ async function main() {
         const verifier = base64UrlEncode(Array.from(Array(N)).map(() => S[Math.floor(Math.random() * S.length)]).join(''))
         const challenge = base64UrlEncode(sha256Hash(Buffer.from(verifier)))
 
-        const redirectUrl = (
-            {
-                name: 'https://www.fitbit.com/oauth2/authorize',
-                params: {
-                    'client_id': process.env.FITBIT_CLIENT_ID,
-                    'response_type': 'code',
-                    'code_challenge': challenge,
-                    'code_challenge_method': 'S256',
-                    'scope': 'heartrate',
-                }
-            }
-        )
-        location.href = redirectUrl
+        const params = {
+            'client_id': process.env.FITBIT_CLIENT_ID,
+            'response_type': 'code',
+            'code_challenge': challenge,
+            'code_challenge_method': 'S256',
+            'scope': 'heartrate',
+        }
+        const urlSearchParam = new URLSearchParams(params).toString();
+        location.href = "https://www.fitbit.com/oauth2/authorize/?" + urlSearchParam
     } catch (err) {
         console.error(err)
     }
