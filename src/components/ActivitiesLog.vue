@@ -1,19 +1,4 @@
 <template>
-  <h1>生活記録表</h1>
-  <div class="border mb-5"></div>
-  <div class="mb-2">
-    <small class="me-3"><strong>※実睡眠時間</strong>：体が完全に安静な状態の時間</small>
-    <small class="me-3"><strong>※睡眠時間</strong>：ベッドにいた時間</small>
-    <small><strong>※睡眠効率</strong>：実睡眠時間 / 睡眠時間×100</small>
-  </div>
-  <select v-model="targetYearRef" @change="tableRowsRefresh">
-    <option v-for="n in [2, 1, 0]" v-bind:value="new Date().getFullYear() - n">
-      {{ new Date().getFullYear() - n }}年
-    </option>
-  </select>
-  <select v-model="targetMonthRef" @change="tableRowsRefresh">
-    <option v-for="n in 12" v-bind:value="n">{{ n }}月</option>
-  </select>
   <ag-grid-vue
     class="ag-theme-alpine"
     style="height: 500px"
@@ -32,7 +17,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
-            {{ `${selectedDateRef.getMonth() + 1}月${selectedDateRef.getDate()}日` }}
+            {{ `${selectedDateRef.getMonth() + 1}/${selectedDateRef.getDate()}` }}
           </h5>
           <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -192,6 +177,7 @@
 import { AgGridVue } from "ag-grid-vue3"; // the AG Grid Vue Component
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
+import { inject, watch } from 'vue'
 
 class SleepRecord {
   constructor(sleepStartTime, sleepEndTime) {
@@ -230,8 +216,8 @@ class ActivityRecord {
 
 const { $bootstrap } = useNuxtApp();
 const config = useRuntimeConfig();
-const targetYearRef = ref(new Date().getFullYear());
-const targetMonthRef = ref(new Date().getMonth() + 1);
+const targetYearRef = inject('targetYearRef');
+const targetMonthRef = inject('targetMonthRef');
 const selectedDateRef = ref(new Date());
 const selectedMoodRef = ref(null);
 const sleepRecordsRef = ref([]);
@@ -242,26 +228,19 @@ const activityRecoredsRefWrap = { activityRecordsRef }; // v-forを使うため�
 const memoRef = ref("");
 const activityTypes = ["運動", "通勤", "入浴", "通院"]
 
-const sumSleepMinutes = computed(() =>
-  sleepRecoredsRefWrap.sleepRecordsRef.value.reduce((a, c) => a + c.sleepMinutes(), 0)
-);
-const actualSleepMinutes = computed(() =>
-  actualSleepMinutesRef.value === null ? "-" : actualSleepMinutesRef.value
-);
-const sleepEfficiency = computed(() =>
-  sumSleepMinutes.value === 0
-    ? "-"
-    : (actualSleepMinutesRef.value / sumSleepMinutes.value) * 100
-);
+const sumSleepMinutes = computed(() => sleepRecoredsRefWrap.sleepRecordsRef.value.reduce((a, c) => a + c.sleepMinutes(), 0))
+const actualSleepMinutes = computed(() => actualSleepMinutesRef.value === null ? "-" : actualSleepMinutesRef.value)
+const sleepEfficiency = computed(() => sumSleepMinutes.value === 0 ? "-" : ((actualSleepMinutesRef.value / sumSleepMinutes.value) * 100).toFixed(2))
 
 let modal = null;
 const domLayout = "autoHeight";
 const columnDefs = [
-  { field: "日付" },
-  { field: "気分" },
-  { field: "実睡眠時間" },
-  { field: "睡眠時間" },
-  { field: "睡眠効率" },
+    { field: "日付" },
+    { field: "気分" },
+    { field: "メモ" },
+    { field: "実睡眠時間" },
+    { field: "睡眠時間" },
+    { field: "睡眠効率" }
 ];
 const defaultColDef = {
   sortable: true,
@@ -401,10 +380,11 @@ function isMoodSelected(mood) {
 }
 
 onMounted(() => {
-  // TODO: vue-bootstrapがvue3非対応のため、Elementをいじっている。Vue3対応のデザインフレームワークを検討。
-  const moodInputModal = document.getElementById("mood-input-modal");
-  modal = new $bootstrap.Modal(moodInputModal);
-  moodInputModal.addEventListener("hidden.bs.modal", tableRowsRefresh);
+    // TODO: vue-bootstrapがvue3非対応のため、Elementをいじっている。Vue3対応のデザインフレームワークを検討。
+    const moodInputModal = document.getElementById("mood-input-modal");
+    modal = new $bootstrap.Modal(moodInputModal);
+    moodInputModal.addEventListener("hidden.bs.modal", tableRowsRefresh)
+    tableRowsRefresh() 
 });
 
 function addSleepRecord() {
@@ -426,6 +406,10 @@ function removeActivityRecord(idx) {
   copiedActivityRecord.splice(idx, 1);
   activityRecordsRef.value = copiedActivityRecord;
 }
+
+watch(targetYearRef,tableRowsRefresh);
+watch(targetMonthRef,tableRowsRefresh);
+
 </script>
 
 <style lang="scss"></style>

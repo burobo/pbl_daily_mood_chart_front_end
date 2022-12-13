@@ -1,17 +1,32 @@
 <template>
+    <h1>生活記録表</h1>
+    <div class="border mb-5"></div>
+    <div class="mb-2">
+        <small class="me-3"><strong>※実睡眠時間</strong>：体が完全に安静な状態の時間</small>
+        <small class="me-3"><strong>※睡眠時間</strong>：ベッドにいた時間</small>
+        <small><strong>※睡眠効率</strong>：実睡眠時間 / 睡眠時間×100</small>
+    </div>
+    <select v-model="targetYearRef">
+        <option v-for="n in [2, 1, 0]" v-bind:value="new Date().getFullYear() - n">
+            {{ new Date().getFullYear() - n }}年
+        </option>
+    </select>
+    <select v-model="targetMonthRef">
+        <option v-for="n in 12" v-bind:value="n">{{ n }}月</option>
+    </select>
     <ul class="tabnav">
-        <li @click="isActive = 'table'" :class="{ 'active': isActive === 'table' }">
+        <li @click="activeTab = 'table'" :class="{ 'active': activeTab === 'table' }">
             生活記録表
         </li>
-        <li @click="isActive = 'graph'" :class="{ 'active': isActive === 'graph' }">
+        <li @click="activeTab = 'graph'" :class="{ 'active': activeTab === 'graph' }">
             睡眠グラフ
         </li>
     </ul>
-    <div v-if="isActive === 'table'">
-        <ActivitiesLog></ActivitiesLog>
+    <div v-if="activeTab === 'table'">
+        <ActivitiesLog />
     </div>
-    <div v-else-if="isActive === 'graph'">
-        <SleepGraph></SleepGraph>
+    <div v-if="activeTab === 'graph'">
+        <SleepGraph />
     </div>
 </template>
 
@@ -39,9 +54,15 @@
 <script setup>
 import ActivitiesLog from '../../components/ActivitiesLog.vue'
 import SleepGraph from '../../components/SleepGraph.vue';
-import { ref } from 'vue';
+import { ref, provide } from 'vue'
 
-const isActive = ref('table')
+const targetYearRef = ref(new Date().getFullYear());
+const targetMonthRef = ref(new Date().getMonth() + 1);
+const activeTab = ref('table')
+
+provide('targetYearRef', targetYearRef)
+provide('targetMonthRef', targetMonthRef)
+
 </script>
 
 <style lang="scss">
