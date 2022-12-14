@@ -23,10 +23,10 @@
         </li>
     </ul>
     <div v-if="activeTab === 'table'">
-        <ActivitiesLog/>
+        <ActivitiesLog />
     </div>
     <div v-if="activeTab === 'graph'">
-        <SleepGraph/>
+        <SleepGraph />
     </div>
 </template>
 
