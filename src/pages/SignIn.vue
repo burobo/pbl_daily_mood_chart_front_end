@@ -7,11 +7,10 @@ import { Buffer } from 'buffer'
 
 async function main() {
     try {
-        let S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        let N = 16
-        const verifier = base64UrlEncode(Array.from(Array(N)).map(() => S[Math.floor(Math.random() * S.length)]).join(''))
+        const verifier = useState('verifier').value;
+        console.log(useState('verifier').value);
         const challenge = base64UrlEncode(sha256Hash(Buffer.from(verifier)))
-        const config = useRuntimeConfig();
+        const config = useRuntimeConfig();     
 
         const params = {
             'client_id': config.FITBIT_CLIENT_ID,

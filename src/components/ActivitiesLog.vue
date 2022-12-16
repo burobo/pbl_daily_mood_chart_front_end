@@ -410,6 +410,8 @@ function removeActivityRecord(idx) {
 watch(targetYearRef,tableRowsRefresh);
 watch(targetMonthRef,tableRowsRefresh);
 
+console.log(useState('verifier').value);
+
 </script>
 
 <style lang="scss"></style>
