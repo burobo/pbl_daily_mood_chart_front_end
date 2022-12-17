@@ -47,8 +47,6 @@
 </style>
 
 <script setup>
-let d = new Date()
-console.log(d.getFullYear())
 import { ref, provide } from 'vue'
 
 const targetMonthRef = ref(new Date().getMonth() + 1);
