@@ -70,6 +70,9 @@
               <button class="btn btn-outline-secondary btn-sm" @click="addSleepRecord">
                 追加
               </button>
+              <button class="btn btn-outline-secondary btn-sm" @click="fetchFitbitSleep()">
+                Fitbitの睡眠記録を取得
+              </button>
             </div>
             <div
               class="row"
@@ -387,8 +390,8 @@ onMounted(() => {
     tableRowsRefresh() 
 });
 
-function addSleepRecord() {
-  sleepRecordsRef.value = [...sleepRecordsRef.value, new SleepRecord()];
+function addSleepRecord(sleepRecord) {
+  sleepRecordsRef.value = [...sleepRecordsRef.value, sleepRecord instanceof SleepRecord ?  sleepRecord : new SleepRecord()];
 }
 
 function removeSleepRecord(idx) {
@@ -397,7 +400,7 @@ function removeSleepRecord(idx) {
   sleepRecordsRef.value = copiedSleepRecord;
 }
 
-function addActivityRecord() {
+function addActivityRecord(activityRecord) {
   activityRecordsRef.value = [...activityRecordsRef.value, new ActivityRecord()];
 }
 
@@ -409,6 +412,25 @@ function removeActivityRecord(idx) {
 
 watch(targetYearRef,tableRowsRefresh);
 watch(targetMonthRef,tableRowsRefresh);
+
+async function fetchFitbitSleep() {
+  const {
+    data: fitbitSleepData,
+    pending: fitbitSleepPending,
+    error: fitbitSleepError,
+    refresh: fitbitSleepRefresh,
+  } = await useFetch("/fetch_fitbit_sleep", {
+    baseURL: config.public.API_PROXY_BASE_URL,
+    initialCache: false,
+    params: {
+      date: selectedDateRef.value.toISOString()
+    },
+    async onResponse({ request, options, response }) {
+      actualSleepMinutesRef.value = response._data.minutesAsleep
+      response._data.sleep.forEach(sleep => addSleepRecord(new SleepRecord(new Date(sleep.startTime), new Date(sleep.endTime))))
+    }
+  })
+}
 
 </script>
 
