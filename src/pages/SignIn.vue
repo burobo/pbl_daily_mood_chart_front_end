@@ -11,8 +11,6 @@ async function main() {
     let N = 64
     const verifier = base64UrlEncode(Array.from(Array(N)).map(() => S[Math.floor(Math.random() * S.length)]).join(''))
     localStorage.setItem('verifier', verifier)
-    console.log(verifier)
-    alert('!!')
     const challenge = base64UrlEncode(sha256Hash(Buffer.from(verifier)))
     const config = useRuntimeConfig();
 

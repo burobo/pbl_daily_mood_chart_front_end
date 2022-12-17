@@ -7,8 +7,9 @@ import { Buffer } from 'buffer'
 
 async function main() {
   try {
-    console.log(localStorage.getItem('verifier'))
     const route = useRoute()
+    console.log(route.query.code)
+    alert(route.query.code)
     const config = useRuntimeConfig();
     const user = config.FITBIT_CLIENT_ID
     const pass = config.FITBIT_CLIENT_SECRET
