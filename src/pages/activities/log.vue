@@ -6,11 +6,6 @@
         <small class="me-3"><strong>※睡眠時間</strong>：ベッドにいた時間</small>
         <small><strong>※睡眠効率</strong>：実睡眠時間 / 睡眠時間×100</small>
     </div>
-    <select v-model="targetYearRef">
-        <option v-for="n in [2, 1, 0]" v-bind:value="new Date().getFullYear() - n">
-            {{ new Date().getFullYear() - n }}年
-        </option>
-    </select>
     <select v-model="targetMonthRef">
         <option v-for="n in 12" v-bind:value="n">{{ n }}月</option>
     </select>
@@ -52,13 +47,13 @@
 </style>
 
 <script setup>
+let d = new Date()
+console.log(d.getFullYear())
 import { ref, provide } from 'vue'
 
-const targetYearRef = ref(new Date().getFullYear());
 const targetMonthRef = ref(new Date().getMonth() + 1);
 const activeTab = ref('table')
 
-provide('targetYearRef', targetYearRef)
 provide('targetMonthRef', targetMonthRef)
 
 </script>

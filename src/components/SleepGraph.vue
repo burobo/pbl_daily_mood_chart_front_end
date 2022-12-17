@@ -24,7 +24,7 @@ import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
 import { inject, watch } from 'vue'
 
 const config = useRuntimeConfig();
-const targetYearRef = inject('targetYearRef');
+const targetYearRef = ref(new Date().getFullYear());
 const targetMonthRef = inject('targetMonthRef');
 
 const { data: rowData, pending: tableRowsPending, error: tableRowsError, refresh: tableRowsRefresh } = await useFetch(
@@ -103,8 +103,8 @@ function zeroPadding(digit, str) {
     return ("0".repeat(digit) + str).slice(-digit);
 }
 
-watch(targetYearRef,tableRowsRefresh);
-watch(targetMonthRef,tableRowsRefresh);
+watch(targetYearRef, tableRowsRefresh);
+watch(targetMonthRef, tableRowsRefresh);
 onMounted(() => {
     tableRowsRefresh()
 })
