@@ -8,7 +8,7 @@
             </svg>
         </button>
         <div class="menu" :class="{ 'is-active': open }">
-            <div class="menu__item">Fitbit ログイン</div>
+            <a href="/SignIn" class="menu__item text-decoration-none">Fitbit ログイン</a>
         </div>
         <NuxtPage />
     </div>
