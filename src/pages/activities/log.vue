@@ -1,14 +1,16 @@
 <template>
     <h1>生活記録表</h1>
     <div class="border mb-5"></div>
-    <div class="mb-2">
+    <div class="mb-3">
         <small class="me-3"><strong>※実睡眠時間</strong>：体が完全に安静な状態の時間</small>
         <small class="me-3"><strong>※睡眠時間</strong>：ベッドにいた時間</small>
         <small><strong>※睡眠効率</strong>：実睡眠時間 / 睡眠時間×100</small>
     </div>
-    <select v-model="targetMonthRef">
-        <option v-for="n in 12" v-bind:value="n">{{ n }}月</option>
-    </select>
+    <div class="mb-3">
+        開始日<input type="date" />
+        -
+        終了日<input type="date" />
+    </div>
     <ul class="tabnav">
         <li @click="activeTab = 'table'" :class="{ 'active': activeTab === 'table' }">
             生活記録表
@@ -47,12 +49,9 @@
 </style>
 
 <script setup>
-import { ref, provide } from 'vue'
+import { ref } from 'vue'
 
-const targetMonthRef = ref(new Date().getMonth() + 1);
 const activeTab = ref('table')
-
-provide('targetMonthRef', targetMonthRef)
 
 </script>
 

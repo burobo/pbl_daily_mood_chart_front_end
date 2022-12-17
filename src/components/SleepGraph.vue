@@ -24,8 +24,9 @@ import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
 import { inject, watch } from 'vue'
 
 const config = useRuntimeConfig();
-const targetYearRef = ref(new Date().getFullYear());
-const targetMonthRef = inject('targetMonthRef');
+let d = new Date()
+const targetYearRef = ref(d.getFullYear());
+const targetMonthRef = ref(d.getMonth() + 1);
 
 const { data: rowData, pending: tableRowsPending, error: tableRowsError, refresh: tableRowsRefresh } = await useFetch(
     "/sleep_graph",
