@@ -1,6 +1,4 @@
 <template>
-    <h1>睡眠グラフ</h1>
-    <div class="border mb-5"></div>
     <ag-grid-vue class="ag-theme-alpine" style="height: 500px" :columnDefs="columnDefs" :rowData="rowData"
         :defaultColDef="defaultColDef" animateRows="true">
     </ag-grid-vue>
@@ -103,8 +101,8 @@ function zeroPadding(digit, str) {
     return ("0".repeat(digit) + str).slice(-digit);
 }
 
-watch(targetYearRef,tableRowsRefresh);
-watch(targetMonthRef,tableRowsRefresh);
+watch(targetYearRef, tableRowsRefresh);
+watch(targetMonthRef, tableRowsRefresh);
 onMounted(() => {
     tableRowsRefresh()
 })

@@ -23,7 +23,9 @@ async function main() {
     }
     const urlSearchParam = new URLSearchParams(params).toString();
     const redirectUrl = "https://www.fitbit.com/oauth2/authorize/?" + urlSearchParam
-    window.location.href = redirectUrl
+    onMounted(() => {
+      location.href = redirectUrl
+    })
   } catch (err) {
     console.error(err)
   }
