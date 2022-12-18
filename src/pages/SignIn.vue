@@ -2,7 +2,7 @@
 </template>
 
 <script setup>
-import sha256 from 'crypto-js/sha256';
+import { sha256 } from 'js-sha256'
 import { Buffer } from 'buffer'
 
 async function main() {
@@ -39,8 +39,10 @@ function base64UrlEncode(buffer) {
 }
 
 function sha256Hash(buffer) {
-  const hash = sha256(buffer);
-  return hash.toString()
+  const hash = sha256.create();
+
+  hash.update(buffer)
+  return hash.digest()
 }
 
 main()
