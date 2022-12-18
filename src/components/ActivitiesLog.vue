@@ -250,8 +250,8 @@ function onFirstDataRendered(params) {
 function onRowClicked(params) {
   selectedDateRef.value = new Date(
     startDate.value.split('-')[0],
-    startDate.value.split('-')[1],
-    params.rowIndex + 1
+    Number(startDate.value.split('-')[1]) - 1,
+    Number(startDate.value.split('-')[2]) + params.rowIndex
   );
   fetchDailyMood();
   modal.show();
