@@ -1,5 +1,4 @@
 <template>
-  {{ user.id }}
 </template>
 
 <script setup>
@@ -8,17 +7,11 @@ import { Buffer } from 'buffer'
 async function main() {
   try {
     const route = useRoute()
-    console.log(route.query.code)
-    alert(route.query.code)
     const config = useRuntimeConfig();
-    const user = config.FITBIT_CLIENT_ID
-    const pass = config.FITBIT_CLIENT_SECRET
-    const credentials = Buffer.from(`${user}:${pass}`).toString('base64')
     const tokenUrl = 'https://api.fitbit.com/oauth2/token'
     const tokenResponse = await fetch(tokenUrl, { // <5>
       method: 'POST',
       headers: {
-        'Authorization': `Basic ${credentials}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: new URLSearchParams({
