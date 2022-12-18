@@ -157,8 +157,8 @@ class ActivityRecord {
 
 const { $bootstrap } = useNuxtApp();
 const config = useRuntimeConfig();
-const targetYearRef = inject('targetYearRef');
-const targetMonthRef = inject('targetMonthRef');
+const startDate = inject('startDate')
+const endDate = inject('endDate')
 const selectedDateRef = ref(new Date());
 const selectedMoodRef = ref(null);
 const sleepRecordsRef = ref([]);
@@ -201,12 +201,8 @@ const {
     user_id: "1",
   },
   async onRequest({ request, options }) {
-    options.body.start_date = formatDateForRequest(
-      sleepStartTimeOfYearMonth(targetYearRef.value, targetMonthRef.value)
-    );
-    options.body.end_date = formatDateForRequest(
-      sleepEndTimeOfYearMonth(targetYearRef.value, targetMonthRef.value)
-    );
+    options.body.start_date = startDate.value.replace(/-/g, '')
+    options.body.end_date = endDate.value.replace(/-/g, '')
   },
 });
 
@@ -236,15 +232,6 @@ async function upsertMood() {
   });
 }
 
-function sleepStartTimeOfYearMonth(year, month) {
-  return new Date(year, Number(month) - 1, 1);
-}
-
-function sleepEndTimeOfYearMonth(year, month) {
-  const sleepStartTimeOfMonth = sleepStartTimeOfYearMonth(year, month);
-  return new Date(year, sleepStartTimeOfMonth.getMonth() + 1, 0);
-}
-
 function formatDateForRequest(date) {
   return `${date.getFullYear()}${zeroPadding(2, date.getMonth() + 1)}${zeroPadding(
     2,
@@ -262,9 +249,9 @@ function onFirstDataRendered(params) {
 
 function onRowClicked(params) {
   selectedDateRef.value = new Date(
-    targetYearRef.value,
-    targetMonthRef.value - 1,
-    params.rowIndex + 1
+    startDate.value.split('-')[0],
+    Number(startDate.value.split('-')[1]) - 1,
+    Number(startDate.value.split('-')[2]) + params.rowIndex
   );
   fetchDailyMood();
   modal.show();
@@ -347,8 +334,8 @@ function removeActivityRecord(idx) {
   activityRecordsRef.value = copiedActivityRecord;
 }
 
-watch(targetYearRef, tableRowsRefresh);
-watch(targetMonthRef, tableRowsRefresh);
+watch(startDate, tableRowsRefresh);
+watch(endDate, tableRowsRefresh);
 
 </script>
 
