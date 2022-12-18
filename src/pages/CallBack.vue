@@ -2,14 +2,12 @@
 </template>
 
 <script setup>
-import { Buffer } from 'buffer'
-
 async function main() {
   try {
     const route = useRoute()
     const config = useRuntimeConfig();
     const tokenUrl = 'https://api.fitbit.com/oauth2/token'
-    const tokenResponse = await fetch(tokenUrl, { // <5>
+    const tokenResponse = await fetch(tokenUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -24,7 +22,7 @@ async function main() {
 
     const tokenBody = await tokenResponse.json()
 
-    if (tokenBody.errors) { // <6>
+    if (tokenBody.errors) {
       console.error(tokenBody.errors[0].message)
       res.status(500).end()
       return
@@ -45,7 +43,7 @@ async function main() {
       `${detailLevel}.json`
     ].join('/')
 
-    const dataResponse = await fetch(dataUrl, { // <7>
+    const dataResponse = await fetch(dataUrl, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${tokenBody['access_token']}`,
@@ -54,13 +52,13 @@ async function main() {
 
     const dataBody = await dataResponse.json()
 
-    if (dataBody.errors) { // <8>
+    if (dataBody.errors) {
       console.error(dataBody.errors[0].message)
       res.status(500).end()
       return
     }
 
-    res.type('text/plain') // <9>
+    res.type('text/plain')
       .send(JSON.stringify(dataBody, null, 2))
   } catch (err) {
     console.error(err)
