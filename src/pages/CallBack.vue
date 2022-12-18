@@ -24,7 +24,7 @@ async function main() {
 
     if (tokenBody.errors) {
       console.error(tokenBody.errors[0].message)
-      res.status(500).end()
+      error({ statusCode: 500 })
       return
     }
 
@@ -54,12 +54,9 @@ async function main() {
 
     if (dataBody.errors) {
       console.error(dataBody.errors[0].message)
-      res.status(500).end()
+      error({ statusCode: 500 })
       return
     }
-
-    res.type('text/plain')
-      .send(JSON.stringify(dataBody, null, 2))
   } catch (err) {
     console.error(err)
   }
