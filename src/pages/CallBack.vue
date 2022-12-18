@@ -24,7 +24,6 @@ async function main() {
 
     if (tokenBody.errors) {
       console.error(tokenBody.errors[0].message)
-      error({ statusCode: 500 })
       return
     }
 
@@ -36,7 +35,7 @@ async function main() {
       'user',
       userId,
       'activities',
-      'heart',
+      'sleep',
       'date',
       date,
       '1d',
@@ -54,7 +53,6 @@ async function main() {
 
     if (dataBody.errors) {
       console.error(dataBody.errors[0].message)
-      error({ statusCode: 500 })
       return
     }
   } catch (err) {

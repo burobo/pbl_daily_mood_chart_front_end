@@ -19,7 +19,7 @@ async function main() {
       'response_type': 'code',
       'code_challenge': challenge,
       'code_challenge_method': 'S256',
-      'scope': 'heartrate',
+      'scope': 'sleep',
     }
     const urlSearchParam = new URLSearchParams(params).toString();
     const redirectUrl = "https://www.fitbit.com/oauth2/authorize/?" + urlSearchParam
