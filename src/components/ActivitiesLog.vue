@@ -291,7 +291,7 @@ async function upsertMood() {
       options.body.mood = selectedMoodRef.value;
       options.body.sleeps = sleepRecordsRef.value;
       options.body.memo = memoRef.value;
-      console.log(activityRecordsRef)
+      options.body.activities = activityRecordsRef._value;
     },
   });
 }
