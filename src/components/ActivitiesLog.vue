@@ -157,10 +157,9 @@ class ActivityRecord {
 
 const { $bootstrap } = useNuxtApp();
 const config = useRuntimeConfig();
-let d = new Date()
 const startDate = inject('startDate')
 const endDate = inject('endDate')
-const selectedDateRef = ref(d);
+const selectedDateRef = ref(new Date());
 const selectedMoodRef = ref(null);
 const sleepRecordsRef = ref([]);
 const actualSleepMinutesRef = ref(null);
