@@ -1,16 +1,7 @@
 <template>
-  <ag-grid-vue
-    class="ag-theme-alpine"
-    style="height: 500px"
-    :domLayout="domLayout"
-    :columnDefs="columnDefs"
-    :rowData="rowData"
-    :defaultColDef="defaultColDef"
-    rowSelection="multiple"
-    animateRows="true"
-    @first-data-rendered="onFirstDataRendered"
-    @rowClicked="onRowClicked"
-  >
+  <ag-grid-vue class="ag-theme-alpine" style="height: 500px" :domLayout="domLayout" :columnDefs="columnDefs"
+    :rowData="rowData" :defaultColDef="defaultColDef" rowSelection="multiple" animateRows="true"
+    @first-data-rendered="onFirstDataRendered" @rowClicked="onRowClicked">
   </ag-grid-vue>
   <div class="modal fade" id="mood-input-modal">
     <div class="modal-dialog modal-dialog-centered">
@@ -26,41 +17,16 @@
             <div class="form-label fw-bold">気分</div>
             <div class="d-flex aligh-item-center justify-content-center">
               <div>
-                <input
-                  class="btn btn-outline-secondary btn-lg"
-                  :class="{ 'btn-primary': isMoodSelected(0) }"
-                  type="button"
-                  value="😢"
-                  @click="selectMood(0)"
-                />
-                <input
-                  class="btn btn-outline-secondary btn-lg"
-                  :class="{ 'btn-primary': isMoodSelected(1) }"
-                  type="button"
-                  value="🙁"
-                  @click="selectMood(1)"
-                />
-                <input
-                  class="btn btn-outline-secondary btn-lg"
-                  :class="{ 'btn-primary': isMoodSelected(2) }"
-                  type="button"
-                  value="😐"
-                  @click="selectMood(2)"
-                />
-                <input
-                  class="btn btn-outline-secondary btn-lg"
-                  :class="{ 'btn-primary': isMoodSelected(3) }"
-                  type="button"
-                  value="😃"
-                  @click="selectMood(3)"
-                />
-                <input
-                  class="btn btn-outline-secondary btn-lg"
-                  :class="{ 'btn-primary': isMoodSelected(4) }"
-                  type="button"
-                  value="😄"
-                  @click="selectMood(4)"
-                />
+                <input class="btn btn-outline-secondary btn-lg" :class="{ 'btn-primary': isMoodSelected(0) }"
+                  type="button" value="😢" @click="selectMood(0)" />
+                <input class="btn btn-outline-secondary btn-lg" :class="{ 'btn-primary': isMoodSelected(1) }"
+                  type="button" value="🙁" @click="selectMood(1)" />
+                <input class="btn btn-outline-secondary btn-lg" :class="{ 'btn-primary': isMoodSelected(2) }"
+                  type="button" value="😐" @click="selectMood(2)" />
+                <input class="btn btn-outline-secondary btn-lg" :class="{ 'btn-primary': isMoodSelected(3) }"
+                  type="button" value="😃" @click="selectMood(3)" />
+                <input class="btn btn-outline-secondary btn-lg" :class="{ 'btn-primary': isMoodSelected(4) }"
+                  type="button" value="😄" @click="selectMood(4)" />
               </div>
             </div>
           </div>
@@ -71,30 +37,17 @@
                 追加
               </button>
             </div>
-            <div
-              class="row"
-              v-for="(sleepRecordRef, idx) in sleepRecoredsRefWrap.sleepRecordsRef.value"
-              :key="idx"
-            >
+            <div class="row" v-for="(sleepRecordRef, idx) in sleepRecoredsRefWrap.sleepRecordsRef.value" :key="idx">
               <div class="col">
-                <input
-                  type="datetime-local"
-                  v-model="
-                    sleepRecoredsRefWrap.sleepRecordsRef.value[idx].sleep_start_time
-                  "
-                />
+                <input type="datetime-local" v-model="
+                  sleepRecoredsRefWrap.sleepRecordsRef.value[idx].sleep_start_time
+                " />
               </div>
               <div class="col">
-                <input
-                  type="datetime-local"
-                  v-model="sleepRecoredsRefWrap.sleepRecordsRef.value[idx].sleep_end_time"
-                />
+                <input type="datetime-local" v-model="sleepRecoredsRefWrap.sleepRecordsRef.value[idx].sleep_end_time" />
               </div>
               <div class="col">
-                <button
-                  class="btn btn-outline-secondary btn-sm"
-                  @click="removeSleepRecord(idx)"
-                >
+                <button class="btn btn-outline-secondary btn-sm" @click="removeSleepRecord(idx)">
                   削除
                 </button>
               </div>
@@ -107,43 +60,31 @@
                 追加
               </button>
             </div>
-            <div
-              v-for="(activityRecordRef, idx) in activityRecoredsRefWrap
-                .activityRecordsRef.value"
-              :key="idx"
-              class="mb-2 border border-2"
-            >
+            <div v-for="(activityRecordRef, idx) in activityRecoredsRefWrap
+            .activityRecordsRef.value" :key="idx" class="mb-2 border border-2">
               <div class="row justify-content-center mb-1">
                 <div class="col">
-                  <select class="col form-select" v-model="activityRecoredsRefWrap.activityRecordsRef.value[idx].activity_type">
+                  <select class="col form-select"
+                    v-model="activityRecoredsRefWrap.activityRecordsRef.value[idx].activity_type">
                     <option v-for="activityType in activityTypes">{{ activityType }}</option>
                   </select>
                 </div>
               </div>
               <div class="row">
                 <div class="col">
-                  <input
-                    type="datetime-local"
-                    v-model="
-                      activityRecoredsRefWrap.activityRecordsRef.value[idx]
-                        .activity_start_time
-                    "
-                  />
+                  <input type="datetime-local" v-model="
+                    activityRecoredsRefWrap.activityRecordsRef.value[idx]
+                      .activity_start_time
+                  " />
                 </div>
                 <div class="col">
-                  <input
-                    type="datetime-local"
-                    v-model="
-                      activityRecoredsRefWrap.activityRecordsRef.value[idx]
-                        .activity_end_time
-                    "
-                  />
+                  <input type="datetime-local" v-model="
+                    activityRecoredsRefWrap.activityRecordsRef.value[idx]
+                      .activity_end_time
+                  " />
                 </div>
                 <div class="col">
-                  <button
-                    class="btn btn-outline-secondary btn-sm"
-                    @click="removeActivityRecord(idx)"
-                  >
+                  <button class="btn btn-outline-secondary btn-sm" @click="removeActivityRecord(idx)">
                     削除
                   </button>
                 </div>
@@ -216,8 +157,8 @@ class ActivityRecord {
 
 const { $bootstrap } = useNuxtApp();
 const config = useRuntimeConfig();
-const targetYearRef = inject('targetYearRef');
-const targetMonthRef = inject('targetMonthRef');
+const startDate = inject('startDate')
+const endDate = inject('endDate')
 const selectedDateRef = ref(new Date());
 const selectedMoodRef = ref(null);
 const sleepRecordsRef = ref([]);
@@ -235,12 +176,12 @@ const sleepEfficiency = computed(() => sumSleepMinutes.value === 0 ? "-" : ((act
 let modal = null;
 const domLayout = "autoHeight";
 const columnDefs = [
-    { field: "日付" },
-    { field: "気分" },
-    { field: "メモ" },
-    { field: "実睡眠時間" },
-    { field: "睡眠時間" },
-    { field: "睡眠効率" }
+  { field: "日付" },
+  { field: "気分" },
+  { field: "メモ" },
+  { field: "実睡眠時間" },
+  { field: "睡眠時間" },
+  { field: "睡眠効率" }
 ];
 const defaultColDef = {
   sortable: true,
@@ -260,12 +201,8 @@ const {
     user_id: "1",
   },
   async onRequest({ request, options }) {
-    options.body.start_date = formatDateForRequest(
-      sleepStartTimeOfYearMonth(targetYearRef.value, targetMonthRef.value)
-    );
-    options.body.end_date = formatDateForRequest(
-      sleepEndTimeOfYearMonth(targetYearRef.value, targetMonthRef.value)
-    );
+    options.body.start_date = startDate.value.replace(/-/g, '')
+    options.body.end_date = endDate.value.replace(/-/g, '')
   },
 });
 
@@ -291,18 +228,8 @@ async function upsertMood() {
       options.body.mood = selectedMoodRef.value;
       options.body.sleeps = sleepRecordsRef.value;
       options.body.memo = memoRef.value;
-      console.log(activityRecordsRef)
     },
   });
-}
-
-function sleepStartTimeOfYearMonth(year, month) {
-  return new Date(year, Number(month) - 1, 1);
-}
-
-function sleepEndTimeOfYearMonth(year, month) {
-  const sleepStartTimeOfMonth = sleepStartTimeOfYearMonth(year, month);
-  return new Date(year, sleepStartTimeOfMonth.getMonth() + 1, 0);
 }
 
 function formatDateForRequest(date) {
@@ -322,9 +249,9 @@ function onFirstDataRendered(params) {
 
 function onRowClicked(params) {
   selectedDateRef.value = new Date(
-    targetYearRef.value,
-    targetMonthRef.value - 1,
-    params.rowIndex + 1
+    startDate.value.split('-')[0],
+    Number(startDate.value.split('-')[1]) - 1,
+    Number(startDate.value.split('-')[2]) + params.rowIndex
   );
   fetchDailyMood();
   modal.show();
@@ -359,12 +286,12 @@ async function fetchDailyMood() {
         response._data[0].sleeps.length === 0
           ? []
           : response._data[0].sleeps.map(
-              (sleep) =>
-                new SleepRecord(
-                  new Date(sleep.sleep_start_time.replace(" ", "T")),
-                  new Date(sleep.sleep_end_time.replace(" ", "T"))
-                )
-            );
+            (sleep) =>
+              new SleepRecord(
+                new Date(sleep.sleep_start_time.replace(" ", "T")),
+                new Date(sleep.sleep_end_time.replace(" ", "T"))
+              )
+          );
       actualSleepMinutesRef.value = response._data[0].sleep_minutes;
       memoRef.value = response._data[0].memo;
     },
@@ -380,11 +307,11 @@ function isMoodSelected(mood) {
 }
 
 onMounted(() => {
-    // TODO: vue-bootstrapがvue3非対応のため、Elementをいじっている。Vue3対応のデザインフレームワークを検討。
-    const moodInputModal = document.getElementById("mood-input-modal");
-    modal = new $bootstrap.Modal(moodInputModal);
-    moodInputModal.addEventListener("hidden.bs.modal", tableRowsRefresh)
-    tableRowsRefresh() 
+  // TODO: vue-bootstrapがvue3非対応のため、Elementをいじっている。Vue3対応のデザインフレームワークを検討。
+  const moodInputModal = document.getElementById("mood-input-modal");
+  modal = new $bootstrap.Modal(moodInputModal);
+  moodInputModal.addEventListener("hidden.bs.modal", tableRowsRefresh)
+  tableRowsRefresh()
 });
 
 function addSleepRecord() {
@@ -407,9 +334,11 @@ function removeActivityRecord(idx) {
   activityRecordsRef.value = copiedActivityRecord;
 }
 
-watch(targetYearRef,tableRowsRefresh);
-watch(targetMonthRef,tableRowsRefresh);
+watch(startDate, tableRowsRefresh);
+watch(endDate, tableRowsRefresh);
 
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+
+</style>
