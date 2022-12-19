@@ -55,6 +55,8 @@ async function main() {
 
     localStorage.setItem('access_token', tokenBody.access_token)
     localStorage.setItem('user_id', tokenBody.user_id)
+
+    location.href = "/activities/log"
   } catch (err) {
     console.error(err)
   }
