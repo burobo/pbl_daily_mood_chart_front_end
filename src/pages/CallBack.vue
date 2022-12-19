@@ -52,6 +52,9 @@ async function main() {
       console.error(dataBody.errors[0].message)
       return
     }
+
+    localStorage.setItem('access_token', tokenBody.access_token)
+    localStorage.setItem('user_id', tokenBody.user_id)
   } catch (err) {
     console.error(err)
   }
