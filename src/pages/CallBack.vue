@@ -28,17 +28,14 @@ async function main() {
     }
 
     const userId = '-'
-    const date = 'today'
-    const detailLevel = '1sec'
+    const date = 'date'
+    const detailLevel = '2022-12-19'
     const dataUrl = 'https://api.fitbit.com/' + [
-      '1',
+      '1.2',
       'user',
       userId,
-      'activities',
       'sleep',
-      'date',
       date,
-      '1d',
       `${detailLevel}.json`
     ].join('/')
 
