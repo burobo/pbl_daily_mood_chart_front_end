@@ -2,14 +2,15 @@
 </template>
 
 <script setup>
-import sha256 from 'crypto-js/sha256';
+import { sha256 } from 'js-sha256'
 import { Buffer } from 'buffer'
 
 async function main() {
   try {
     let S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    let N = 16
+    let N = 64
     const verifier = base64UrlEncode(Array.from(Array(N)).map(() => S[Math.floor(Math.random() * S.length)]).join(''))
+    localStorage.setItem('verifier', verifier)
     const challenge = base64UrlEncode(sha256Hash(Buffer.from(verifier)))
     const config = useRuntimeConfig();
 
@@ -18,7 +19,7 @@ async function main() {
       'response_type': 'code',
       'code_challenge': challenge,
       'code_challenge_method': 'S256',
-      'scope': 'heartrate',
+      'scope': 'sleep',
     }
     const urlSearchParam = new URLSearchParams(params).toString();
     const redirectUrl = "https://www.fitbit.com/oauth2/authorize/?" + urlSearchParam
@@ -38,8 +39,10 @@ function base64UrlEncode(buffer) {
 }
 
 function sha256Hash(buffer) {
-  const hash = sha256(buffer);
-  return hash.toString()
+  const hash = sha256.create();
+
+  hash.update(buffer)
+  return hash.digest()
 }
 
 main()
