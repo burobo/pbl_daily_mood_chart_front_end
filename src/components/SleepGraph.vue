@@ -40,11 +40,23 @@ const { data: rowData, pending: tableRowsPending, error: tableRowsError, refresh
   }
 );
 
+const styleSleep    = { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" };
+const styleExercise = { backgroundColor: "#000000", fontSize: 0, borderRight: "dotted white" };
+const styleWork     = { backgroundColor: "#ffff00", fontSize: 0, borderRight: "dotted white" };
+const styleBath     = { backgroundColor: "#00ffff", fontSize: 0, borderRight: "dotted white" };
+const styleClinic   = { backgroundColor: "#f08080", fontSize: 0, borderRight: "dotted white" };
 
 // Each Column Definition results in one Column.
 const columnDefs = [
   { field: "日付", filter: false, minWidth: 90 },
-  { field: "0", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
+  { field: "0", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},
   { field: "1", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
   { field: "2", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
   { field: "3", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
