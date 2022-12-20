@@ -27,32 +27,6 @@ async function main() {
       return
     }
 
-    const userId = '-'
-    const date = 'date'
-    const detailLevel = '2022-12-19'
-    const dataUrl = 'https://api.fitbit.com/' + [
-      '1.2',
-      'user',
-      userId,
-      'sleep',
-      date,
-      `${detailLevel}.json`
-    ].join('/')
-
-    const dataResponse = await fetch(dataUrl, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${tokenBody['access_token']}`,
-      },
-    })
-
-    const dataBody = await dataResponse.json()
-
-    if (dataBody.errors) {
-      console.error(dataBody.errors[0].message)
-      return
-    }
-
     localStorage.setItem('access_token', tokenBody.access_token)
     localStorage.setItem('user_id', tokenBody.user_id)
 
