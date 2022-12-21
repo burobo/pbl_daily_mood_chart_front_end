@@ -52,7 +52,7 @@ export default defineEventHandler(async (event) => {
                 sleepHours.forEach(sleepHour=>{
                     if(date.getFullYear()==sleepHour.getFullYear() && date.getMonth()==sleepHour.getMonth() && date.getDate()==sleepHour.getDate()){
                         const hours = sleepHour.getHours().toString();
-                        format[hours] = "true";
+                        format[hours] = "sleep";
                     }
                      
                 })

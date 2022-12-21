@@ -56,30 +56,191 @@ const columnDefs = [
     if(params.value=="bath")     return styleBath
     if(params.value=="clinic")   return styleClinic
     return null
+  }},  
+  { field: "1", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
   }},
-  { field: "1", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "2", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "3", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "4", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "5", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "6", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "7", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "8", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "9", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "10", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "11", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "12", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "13", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "14", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "15", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "16", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "17", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "18", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "19", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "20", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "21", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "22", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null },
-  { field: "23", filter: false, sortable: false, cellStyle: params => params.value === "true" ? { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" } : null }
+  { field: "2", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},  
+  { field: "3", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},
+  { field: "4", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},  
+  { field: "5", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},
+  { field: "6", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},  
+  { field: "7", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }}, 
+  { field: "8", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},  
+  { field: "9", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},
+  { field: "10", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},  
+  { field: "11", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},
+  { field: "12", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},  
+  { field: "13", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},
+  { field: "14", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},  
+  { field: "15", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }}, 
+  { field: "16", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},  
+  { field: "17", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},
+  { field: "18", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},  
+  { field: "19", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},
+  { field: "20", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},  
+  { field: "21", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},
+  { field: "22", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }},  
+  { field: "23", filter: false, sortable: false, cellStyle: params => {
+    if(params.value=="sleep")    return styleSleep
+    if(params.value=="exercise") return styleExercise
+    if(params.value=="work")     return styleWork
+    if(params.value=="bath")     return styleBath
+    if(params.value=="clinic")   return styleClinic
+    return null
+  }}
 ];
 
 // DefaultColDef sets props common to all Columns
