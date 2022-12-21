@@ -21,6 +21,13 @@ export default defineEventHandler(async (event) => {
                 const sleepEndTime = new Date(record.sleep_end_time.replace(" ","T"));
                 return hoursBetween(sleepStartTime, sleepEndTime)
             }).flat();
+            const exerciseHours = response._data.map(record=>{if('activities' in record) return record.activities}).flat().map(record=>{
+                if((typeof(record)=='object') && ('activity_start_time' in record)) {
+                    const exerciseStartTime = new Date(record.activity_start_time.replace(" ","T"));
+                    const exerciseEndTime = new Date(record.activity_end_time.replace(" ","T"));
+                    return hoursBetween(exerciseStartTime, exerciseEndTime)
+                }
+            }).flat();
             res = datesBetween(formatYYYYMMDDToJSDate(reqBody.start_date), formatYYYYMMDDToJSDate(reqBody.end_date)).map(date=>{
                 const format = {
                     "日付":`${date.getMonth() + 1}/${date.getDate()}`,
@@ -54,8 +61,13 @@ export default defineEventHandler(async (event) => {
                         const hours = sleepHour.getHours().toString();
                         format[hours] = "sleep";
                     }
-                     
                 })
+                exerciseHours.forEach(sleepHour=>{
+                    if(typeof(sleepHour) !== "undefined" && date.getFullYear()==sleepHour.getFullYear() && date.getMonth()==sleepHour.getMonth() && date.getDate()==sleepHour.getDate()){
+                        const hours = sleepHour.getHours().toString();
+                        format[hours] = "exercise";
+                    }
+                }) 
                 return format
             })
         }
