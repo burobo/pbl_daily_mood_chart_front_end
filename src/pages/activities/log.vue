@@ -6,7 +6,7 @@
       <tr>
         <th style="width: 40px;">凡例</th>
         <td class="sleep-bg"></td>
-        <td>睡眠</td>
+        <td style="width: 40px;">睡眠</td>
         <td class="exercise-bg"></td>
         <td style="width: 40px;">運動</td>
         <td class="commute-bg"></td>
@@ -48,7 +48,6 @@
 .sleep-bg {
   background-color: #0b3769;
   padding: 20px 25px;
-  margin: 0 3px;
 }
 
 .exercise-bg {
