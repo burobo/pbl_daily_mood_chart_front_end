@@ -6,7 +6,7 @@
       <tr>
         <th style="width: 40px;">凡例</th>
         <td class="sleep-bg"></td>
-        <td>睡眠（自動計測）</td>
+        <td>睡眠</td>
         <td class="exercise-bg"></td>
         <td style="width: 40px;">運動</td>
         <td class="commute-bg"></td>
