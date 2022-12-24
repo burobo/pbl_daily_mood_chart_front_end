@@ -4,23 +4,24 @@ const config = useRuntimeConfig()
 
 export default defineEventHandler(async (event) => {
     const reqQuery = await getQuery(event)
-    return mockResponse(new Date(reqQuery.date))
-
+    // return mockResponse(new Date(reqQuery.date))
     let res
-    // /1.2/user/[user-id]/sleep/list.json
     const { data, pending, error, refresh } = await ofetch("", {
         method: "GET",
-        baseURL: "", // TODO:
-        body: {
+        baseURL: `https://api.fitbit.com/1.2/user/${reqQuery.user_id}/sleep/date/${reqQuery.date}.json`, 
+        headers: {
+          accept: "application/json",
+          authorization: `Bearer ${reqQuery.access_token}`,
         },
         async onRequest({request, options}) {
-            // TODO
+          console.log(request)
+          console.log(options)
         },
         async onResponse({request, options, response}) {
             res = response
         }
     });
-    return res._data
+    return formatResponse(res._data)
 })
 
 function formatResponse(fbRes){

@@ -349,6 +349,12 @@ watch(startDate, tableRowsRefresh);
 watch(endDate, tableRowsRefresh);
 
 async function fetchFitbitSleep() {
+  const accessToken = localStorage.getItem('access_token')
+  const userId = localStorage.getItem('user_id')
+  if (!accessToken || !userId) {
+    alert('メニューからFitbitにログインしてください。')
+    return
+  }
   const {
     data: fitbitSleepData,
     pending: fitbitSleepPending,
@@ -358,9 +364,18 @@ async function fetchFitbitSleep() {
     baseURL: config.public.API_PROXY_BASE_URL,
     initialCache: false,
     params: {
-      date: selectedDateRef.value.toISOString()
+      date: `${selectedDateRef.value.getFullYear()}-${zeroPadding(
+        2,
+        selectedDateRef.value.getMonth() + 1
+      )}-${zeroPadding(2, selectedDateRef.value.getDate())}`,
+      user_id: userId,
+      access_token: accessToken,
     },
     async onResponse({ request, options, response }) {
+      if (response._data.sleep.length === 0) {
+        alert('Fitbitの睡眠記録がありません。')
+        return
+      }
       actualSleepMinutesRef.value = response._data.minutesAsleep
       response._data.sleep.forEach(sleep => addSleepRecord(new SleepRecord(new Date(sleep.startTime), new Date(sleep.endTime))))
     }
