@@ -1,4 +1,9 @@
 <template>
+  <div class="mb-3">
+    <small class="me-3"><strong>※実睡眠時間</strong>：体が完全に安静な状態の時間</small>
+    <small class="me-3"><strong>※睡眠時間</strong>：ベッドにいた時間</small>
+    <small><strong>※睡眠効率</strong>：実睡眠時間 / 睡眠時間×100</small>
+  </div>
   <ag-grid-vue class="ag-theme-alpine" style="height: 500px" :domLayout="domLayout" :columnDefs="columnDefs"
     :rowData="rowData" :defaultColDef="defaultColDef" rowSelection="multiple" animateRows="true"
     @first-data-rendered="onFirstDataRendered" @rowClicked="onRowClicked">
@@ -290,7 +295,7 @@ async function fetchDailyMood() {
             new Date(sleep.sleep_start_time.replace(" ", "T")),
             new Date(sleep.sleep_end_time.replace(" ", "T"))
           )
-      );
+        );
       activityRecordsRef.value = !Array.isArray(response._data[0].activities)
         ? []
         : response._data[0].activities.map(activity =>
@@ -299,7 +304,7 @@ async function fetchDailyMood() {
             new Date(activity.activity_end_time.replace(" ", "T")),
             activity.activity_type
           )
-      );
+        );
       actualSleepMinutesRef.value = response._data[0].sleep_minutes;
       memoRef.value = response._data[0].memo;
     },
