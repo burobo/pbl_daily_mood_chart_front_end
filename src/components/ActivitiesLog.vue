@@ -283,6 +283,7 @@ async function fetchDailyMood() {
         selectedMoodRef.value = null;
         sleepRecordsRef.value = [];
         memoRef.value = "";
+        actualSleepMinutesRef.value = null;
         return;
       }
       selectedMoodRef.value = response._data[0].mood;
