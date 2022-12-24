@@ -232,6 +232,7 @@ async function upsertMood() {
       options.body.sleeps = sleepRecordsRef.value;
       options.body.memo = memoRef.value;
       options.body.activities = activityRecordsRef.value;
+      options.body.sleep_minutes = actualSleepMinutesRef.value
     },
   });
 }
