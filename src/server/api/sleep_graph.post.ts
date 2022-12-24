@@ -23,9 +23,38 @@ export default defineEventHandler(async (event) => {
             }).flat();
             const exerciseHours = response._data.map(record=>{if('activities' in record) return record.activities}).flat().map(record=>{
                 if((typeof(record)=='object') && ('activity_start_time' in record)) {
-                    const exerciseStartTime = new Date(record.activity_start_time.replace(" ","T"));
-                    const exerciseEndTime = new Date(record.activity_end_time.replace(" ","T"));
-                    return hoursBetween(exerciseStartTime, exerciseEndTime)
+                    if(record.activity_type == "運動"){
+                        const activityStartTime = new Date(record.activity_start_time.replace(" ","T"));
+                        const activityEndTime = new Date(record.activity_end_time.replace(" ","T"));
+                        return hoursBetweenActivity(activityStartTime, activityEndTime)
+                    }
+                }
+            }).flat();
+            const workHours = response._data.map(record=>{if('activities' in record) return record.activities}).flat().map(record=>{
+                if((typeof(record)=='object') && ('activity_start_time' in record)) {
+                    if(record.activity_type == "通勤"){
+                        const activityStartTime = new Date(record.activity_start_time.replace(" ","T"));
+                        const activityEndTime = new Date(record.activity_end_time.replace(" ","T"));
+                        return hoursBetweenActivity(activityStartTime, activityEndTime)
+                    }
+                }
+            }).flat();
+            const bathHours = response._data.map(record=>{if('activities' in record) return record.activities}).flat().map(record=>{
+                if((typeof(record)=='object') && ('activity_start_time' in record)) {
+                    if(record.activity_type == "入浴"){
+                        const activityStartTime = new Date(record.activity_start_time.replace(" ","T"));
+                        const activityEndTime = new Date(record.activity_end_time.replace(" ","T"));
+                        return hoursBetweenActivity(activityStartTime, activityEndTime)
+                    }
+                }
+            }).flat();
+            const clinicHours = response._data.map(record=>{if('activities' in record) return record.activities}).flat().map(record=>{
+                if((typeof(record)=='object') && ('activity_start_time' in record)) {
+                    if(record.activity_type == "通院"){
+                        const activityStartTime = new Date(record.activity_start_time.replace(" ","T"));
+                        const activityEndTime = new Date(record.activity_end_time.replace(" ","T"));
+                        return hoursBetweenActivity(activityStartTime, activityEndTime)
+                    }
                 }
             }).flat();
             res = datesBetween(formatYYYYMMDDToJSDate(reqBody.start_date), formatYYYYMMDDToJSDate(reqBody.end_date)).map(date=>{
@@ -62,10 +91,28 @@ export default defineEventHandler(async (event) => {
                         format[hours] = "sleep";
                     }
                 })
-                exerciseHours.forEach(sleepHour=>{
-                    if(typeof(sleepHour) !== "undefined" && date.getFullYear()==sleepHour.getFullYear() && date.getMonth()==sleepHour.getMonth() && date.getDate()==sleepHour.getDate()){
-                        const hours = sleepHour.getHours().toString();
+                exerciseHours.forEach(actHour=>{
+                    if(typeof(actHour) !== "undefined" && date.getFullYear()==actHour.getFullYear() && date.getMonth()==actHour.getMonth() && date.getDate()==actHour.getDate()){
+                        const hours = actHour.getHours().toString();
                         format[hours] = "exercise";
+                    }
+                }) 
+                workHours.forEach(actHour=>{
+                    if(typeof(actHour) !== "undefined" && date.getFullYear()==actHour.getFullYear() && date.getMonth()==actHour.getMonth() && date.getDate()==actHour.getDate()){
+                        const hours = actHour.getHours().toString();
+                        format[hours] = "work";
+                    }
+                })
+                bathHours.forEach(actHour=>{
+                    if(typeof(actHour) !== "undefined" && date.getFullYear()==actHour.getFullYear() && date.getMonth()==actHour.getMonth() && date.getDate()==actHour.getDate()){
+                        const hours = actHour.getHours().toString();
+                        format[hours] = "bath";
+                    }
+                })
+                clinicHours.forEach(actHour=>{
+                    if(typeof(actHour) !== "undefined" && date.getFullYear()==actHour.getFullYear() && date.getMonth()==actHour.getMonth() && date.getDate()==actHour.getDate()){
+                        const hours = actHour.getHours().toString();
+                        format[hours] = "clinic";
                     }
                 }) 
                 return format
@@ -103,6 +150,23 @@ function hoursBetween(startDate, endDate) {
         hours.shift();
     }
     if(endDate.getMinutes() < 30){
+        hours.pop();
+    }
+    return hours;
+};
+
+function hoursBetweenActivity(startDate, endDate) {
+    const current = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), startDate.getHours())
+    const hours = []
+    if((endDate.getTime()-startDate.getTime()) / (60 * 1000) < 30) return hours
+    while(current.getTime() <= endDate.getTime()) {
+        hours.push(new Date(current.getFullYear(), current.getMonth(), current.getDate(), current.getHours()))
+        current.setHours(current.getHours() + 1)
+    }
+    if(startDate.getMinutes() >= 45){
+        hours.shift();
+    }
+    if(endDate.getMinutes() < 15){
         hours.pop();
     }
     return hours;
