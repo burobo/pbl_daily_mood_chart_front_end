@@ -228,7 +228,7 @@ async function upsertMood() {
       options.body.mood = selectedMoodRef.value;
       options.body.sleeps = sleepRecordsRef.value;
       options.body.memo = memoRef.value;
-      options.body.activities = activityRecordsRef._value;
+      options.body.activities = activityRecordsRef.value;
     },
   });
 }
@@ -283,16 +283,23 @@ async function fetchDailyMood() {
         return;
       }
       selectedMoodRef.value = response._data[0].mood;
-      sleepRecordsRef.value =
-        response._data[0].sleeps.length === 0
-          ? []
-          : response._data[0].sleeps.map(
-            (sleep) =>
-              new SleepRecord(
-                new Date(sleep.sleep_start_time.replace(" ", "T")),
-                new Date(sleep.sleep_end_time.replace(" ", "T"))
-              )
-          );
+      sleepRecordsRef.value = !Array.isArray(response._data[0].sleeps)
+        ? []
+        : response._data[0].sleeps.map(sleep =>
+          new SleepRecord(
+            new Date(sleep.sleep_start_time.replace(" ", "T")),
+            new Date(sleep.sleep_end_time.replace(" ", "T"))
+          )
+      );
+      activityRecordsRef.value = !Array.isArray(response._data[0].activities)
+        ? []
+        : response._data[0].activities.map(activity =>
+          new ActivityRecord(
+            new Date(activity.activity_start_time.replace(" ", "T")),
+            new Date(activity.activity_end_time.replace(" ", "T")),
+            activity.activity_type
+          )
+      );
       actualSleepMinutesRef.value = response._data[0].sleep_minutes;
       memoRef.value = response._data[0].memo;
     },
