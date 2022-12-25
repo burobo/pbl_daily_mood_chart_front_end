@@ -1,4 +1,21 @@
 <template>
+  <div class="mb-3">
+    <table>
+      <tr>
+        <th style="width: 40px;">凡例</th>
+        <td class="sleep-bg"></td>
+        <td style="width: 40px;">睡眠</td>
+        <td class="exercise-bg"></td>
+        <td style="width: 40px;">運動</td>
+        <td class="commute-bg"></td>
+        <td style="width: 40px;">通勤</td>
+        <td class="bathe-bg"></td>
+        <td style="width: 40px;">入浴</td>
+        <td class="commute-hospital-bg"></td>
+        <td>通院</td>
+      </tr>
+    </table>
+  </div>
   <ag-grid-vue class="ag-theme-alpine" style="height: 500px" :columnDefs="columnDefs" :rowData="rowData"
     :defaultColDef="defaultColDef" animateRows="true">
   </ag-grid-vue>
