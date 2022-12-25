@@ -345,6 +345,7 @@ function removeActivityRecord(idx) {
 function checkSleepData() {
   const errors = []
   let isAfter4Yesterday = true
+  let isBefore4Today = true
   let isStartTimeBeforeEndTime = true
   const After4Yesterday = new Date(
     selectedDateRef.value.getFullYear(),
@@ -352,11 +353,22 @@ function checkSleepData() {
     selectedDateRef.value.getDate() - 1,
     16
   )
+  const Before4Today = new Date(
+    selectedDateRef.value.getFullYear(),
+    selectedDateRef.value.getMonth(),
+    selectedDateRef.value.getDate(),
+    15, 59
+  )
 
   for (let s of sleepRecordsRef.value) {
     const startDateTime = new Date(s.sleep_start_time)
+    const endDateTime = new Date(s.sleep_end_time)
+
     if (startDateTime < After4Yesterday) {
       isAfter4Yesterday = false
+    }
+    if (endDateTime > Before4Today) {
+      isBefore4Today = false
     }
     if (s.sleep_start_time > s.sleep_end_time) {
       isStartTimeBeforeEndTime = false
@@ -365,6 +377,9 @@ function checkSleepData() {
 
   if (!isAfter4Yesterday) {
     errors.push("・開始時間は前日の16時以降にしてください")
+  }
+  if (!isBefore4Today) {
+    errors.push("・終了時間は当日の15時59分より前にしてください")
   }
   if (!isStartTimeBeforeEndTime) {
     errors.push("・開始時間は終了時間より前にしてください")
