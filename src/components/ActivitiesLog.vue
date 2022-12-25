@@ -382,10 +382,10 @@ function checkSleepData() {
   const ascEndDateTimeArray = [...endDateTimeArray].sort((a, b) => new Date(a) - new Date(b));
   let hasDuplicateSleepTime = false
 
-  if (ascStartDateTimeArray[1] < ascEndDateTimeArray[0] ||
-    ascStartDateTimeArray[2] < ascEndDateTimeArray[1] ||
-    ascStartDateTimeArray[3] < ascEndDateTimeArray[2]) {
-    hasDuplicateSleepTime = true
+  for (let i = 0; i < ascStartDateTimeArray.length; i++) {
+    if (ascStartDateTimeArray[i + 1] < ascEndDateTimeArray[i]) {
+      hasDuplicateSleepTime = true
+    }
   }
 
   const errors = []
