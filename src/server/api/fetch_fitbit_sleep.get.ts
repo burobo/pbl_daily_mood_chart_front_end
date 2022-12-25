@@ -14,6 +14,12 @@ export default defineEventHandler(async (event) => {
         },
         async onResponse({request, options, response}) {
             res = response
+        },
+        async onResponseError({ request, options, response }) {
+          res = createError({
+            statusCode: response.status,
+            statusMessage: response.statusText
+          })
         }
     });
     return formatResponse(res._data)

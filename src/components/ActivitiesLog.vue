@@ -374,13 +374,24 @@ async function fetchFitbitSleep() {
       access_token: accessToken,
     },
     async onResponse({ request, options, response }) {
+      switch (response.status) {
+        case 200:
+          break;
+        case 401:
+          alert('メニューからFitbitにログインしてください。')
+          return;
+        default:
+          console.log(response)
+          alert('原因不明のエラーです。')
+          return;
+      }
       if (response._data.sleep.length === 0) {
         alert('Fitbitの睡眠記録がありません。')
         return
       }
       actualSleepMinutesRef.value = response._data.minutesAsleep
       response._data.sleep.forEach(sleep => addSleepRecord(new SleepRecord(new Date(sleep.startTime), new Date(sleep.endTime))))
-    }
+    },
   })
 }
 
