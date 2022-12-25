@@ -2,28 +2,6 @@
   <h1>生活記録表</h1>
   <div class="border mb-5"></div>
   <div class="mb-3">
-    <table>
-      <tr>
-        <th style="width: 40px;">凡例</th>
-        <td class="sleep-bg"></td>
-        <td style="width: 40px;">睡眠</td>
-        <td class="exercise-bg"></td>
-        <td style="width: 40px;">運動</td>
-        <td class="commute-bg"></td>
-        <td style="width: 40px;">通勤</td>
-        <td class="bathe-bg"></td>
-        <td style="width: 40px;">入浴</td>
-        <td class="commute-hospital-bg"></td>
-        <td>通院</td>
-      </tr>
-    </table>
-  </div>
-  <div class="mb-3">
-    <small class="me-3"><strong>※実睡眠時間</strong>：体が完全に安静な状態の時間</small>
-    <small class="me-3"><strong>※睡眠時間</strong>：ベッドにいた時間</small>
-    <small><strong>※睡眠効率</strong>：実睡眠時間 / 睡眠時間×100</small>
-  </div>
-  <div class="mb-3">
     開始日<input type="date" v-model="startDate" />
     -
     終了日<input type="date" v-model="endDate" />
