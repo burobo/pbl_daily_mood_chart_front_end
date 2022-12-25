@@ -105,7 +105,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-dark" data-bs-dismiss="modal" @click="upsertMood">
+          <button class="btn btn-dark" data-bs-dismiss="modal" @click="checkSleepData">
             保存
           </button>
         </div>
@@ -290,7 +290,7 @@ async function fetchDailyMood() {
             new Date(sleep.sleep_start_time.replace(" ", "T")),
             new Date(sleep.sleep_end_time.replace(" ", "T"))
           )
-      );
+        );
       activityRecordsRef.value = !Array.isArray(response._data[0].activities)
         ? []
         : response._data[0].activities.map(activity =>
@@ -299,7 +299,7 @@ async function fetchDailyMood() {
             new Date(activity.activity_end_time.replace(" ", "T")),
             activity.activity_type
           )
-      );
+        );
       actualSleepMinutesRef.value = response._data[0].sleep_minutes;
       memoRef.value = response._data[0].memo;
     },
@@ -340,6 +340,18 @@ function removeActivityRecord(idx) {
   const copiedActivityRecord = [...activityRecordsRef.value];
   copiedActivityRecord.splice(idx, 1);
   activityRecordsRef.value = copiedActivityRecord;
+}
+
+function checkSleepData() {
+  const errors = []
+  if (sleepRecordsRef.value[0].sleep_start_time > sleepRecordsRef.value[0].sleep_end_time) {
+    errors.push("開始時間は終了時間より前にしてください")
+  }
+  if (errors.length == 0) {
+    upsertMood();
+  } else {
+    alert(errors)
+  }
 }
 
 watch(startDate, tableRowsRefresh);
