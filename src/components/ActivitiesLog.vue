@@ -361,9 +361,9 @@ function checkSleepData() {
     15, 59
   )
 
-  let isAfterPM4Yesterday = true
-  let isBeforePM4Today = true
-  let isStartTimeBeforeEndTime = true
+  let isBeforePM4Yesterday = false
+  let isAfterPM4Today = false
+  let isStartTimeAfterEndTime = false
   const startDateTimeArray = []
   const endDateTimeArray = []
   for (let s of sleepRecordsRef.value) {
@@ -372,15 +372,9 @@ function checkSleepData() {
     startDateTimeArray.push(startDateTime)
     endDateTimeArray.push(endDateTime)
 
-    if (startDateTime < afterPM4Yesterday) {
-      isAfterPM4Yesterday = false
-    }
-    if (endDateTime > beforePM4Today) {
-      isBeforePM4Today = false
-    }
-    if (startDateTime > endDateTime) {
-      isStartTimeBeforeEndTime = false
-    }
+    isBeforePM4Yesterday = startDateTime < afterPM4Yesterday
+    isAfterPM4Today = endDateTime > beforePM4Today
+    isStartTimeAfterEndTime = startDateTime > endDateTime
   }
 
   const ascStartDateTimeArray = [...startDateTimeArray].sort((a, b) => new Date(a) - new Date(b));
@@ -394,13 +388,13 @@ function checkSleepData() {
   }
 
   const errors = []
-  if (!isAfterPM4Yesterday) {
+  if (isBeforePM4Yesterday) {
     errors.push("・開始時間は前日の16時以降にしてください")
   }
-  if (!isBeforePM4Today) {
+  if (isAfterPM4Today) {
     errors.push("・終了時間は当日の15時59分より前にしてください")
   }
-  if (!isStartTimeBeforeEndTime) {
+  if (isStartTimeAfterEndTime) {
     errors.push("・開始時間は終了時間より前にしてください")
   }
   if (hasDuplicateSleepTime) {
