@@ -12,10 +12,6 @@ export default defineEventHandler(async (event) => {
           accept: "application/json",
           authorization: `Bearer ${reqQuery.access_token}`,
         },
-        async onRequest({request, options}) {
-          console.log(request)
-          console.log(options)
-        },
         async onResponse({request, options, response}) {
             res = response
         }
