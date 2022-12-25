@@ -343,10 +343,6 @@ function removeActivityRecord(idx) {
 }
 
 function checkSleepData() {
-  const errors = []
-  let isAfter4Yesterday = true
-  let isBefore4Today = true
-  let isStartTimeBeforeEndTime = true
   const After4Yesterday = new Date(
     selectedDateRef.value.getFullYear(),
     selectedDateRef.value.getMonth(),
@@ -360,9 +356,16 @@ function checkSleepData() {
     15, 59
   )
 
+  let isAfter4Yesterday = true
+  let isBefore4Today = true
+  let isStartTimeBeforeEndTime = true
+  const startDateTimeArray = []
+  const endDateTimeArray = []
   for (let s of sleepRecordsRef.value) {
     const startDateTime = new Date(s.sleep_start_time)
     const endDateTime = new Date(s.sleep_end_time)
+    startDateTimeArray.push(startDateTime)
+    endDateTimeArray.push(endDateTime)
 
     if (startDateTime < After4Yesterday) {
       isAfter4Yesterday = false
@@ -370,11 +373,22 @@ function checkSleepData() {
     if (endDateTime > Before4Today) {
       isBefore4Today = false
     }
-    if (s.sleep_start_time > s.sleep_end_time) {
+    if (startDateTime > endDateTime) {
       isStartTimeBeforeEndTime = false
     }
   }
 
+  const ascStartDateTimeArray = [...startDateTimeArray].sort((a, b) => new Date(a) - new Date(b));
+  const ascEndDateTimeArray = [...endDateTimeArray].sort((a, b) => new Date(a) - new Date(b));
+  let hasDuplicateSleepTime = false
+
+  if (ascStartDateTimeArray[1] < ascEndDateTimeArray[0] ||
+    ascStartDateTimeArray[2] < ascEndDateTimeArray[1] ||
+    ascStartDateTimeArray[3] < ascEndDateTimeArray[2]) {
+    hasDuplicateSleepTime = true
+  }
+
+  const errors = []
   if (!isAfter4Yesterday) {
     errors.push("・開始時間は前日の16時以降にしてください")
   }
@@ -383,6 +397,9 @@ function checkSleepData() {
   }
   if (!isStartTimeBeforeEndTime) {
     errors.push("・開始時間は終了時間より前にしてください")
+  }
+  if (hasDuplicateSleepTime) {
+    errors.push("・睡眠時間の重複がないようにしてください")
   }
   if (errors.length == 0) {
     upsertMood();
