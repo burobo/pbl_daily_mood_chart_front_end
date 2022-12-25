@@ -11,7 +11,7 @@
       生活記録表
     </li>
     <li @click="activeTab = 'graph'" :class="{ 'active': activeTab === 'graph' }">
-      睡眠グラフ
+      生活記録グラフ
     </li>
   </ul>
   <div v-if="activeTab === 'table'">
