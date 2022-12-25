@@ -344,19 +344,35 @@ function removeActivityRecord(idx) {
 
 function checkSleepData() {
   const errors = []
+  let isAfter4Yesterday = true
   let isStartTimeBeforeEndTime = true
+  const After4Yesterday = new Date(
+    selectedDateRef.value.getFullYear(),
+    selectedDateRef.value.getMonth(),
+    selectedDateRef.value.getDate() - 1,
+    16
+  )
+
   for (let s of sleepRecordsRef.value) {
+    const startDateTime = new Date(s.sleep_start_time)
+    if (startDateTime < After4Yesterday) {
+      isAfter4Yesterday = false
+    }
     if (s.sleep_start_time > s.sleep_end_time) {
       isStartTimeBeforeEndTime = false
     }
   }
+
+  if (!isAfter4Yesterday) {
+    errors.push("・開始時間は前日の16時以降にしてください")
+  }
   if (!isStartTimeBeforeEndTime) {
-    errors.push("開始時間は終了時間より前にしてください")
+    errors.push("・開始時間は終了時間より前にしてください")
   }
   if (errors.length == 0) {
     upsertMood();
   } else {
-    alert(errors)
+    alert(errors.join("\n"))
   }
 }
 
