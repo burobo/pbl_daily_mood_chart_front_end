@@ -344,7 +344,13 @@ function removeActivityRecord(idx) {
 
 function checkSleepData() {
   const errors = []
-  if (sleepRecordsRef.value[0].sleep_start_time > sleepRecordsRef.value[0].sleep_end_time) {
+  let isStartTimeBeforeEndTime = true
+  for (let s of sleepRecordsRef.value) {
+    if (s.sleep_start_time > s.sleep_end_time) {
+      isStartTimeBeforeEndTime = false
+    }
+  }
+  if (!isStartTimeBeforeEndTime) {
     errors.push("開始時間は終了時間より前にしてください")
   }
   if (errors.length == 0) {
