@@ -110,7 +110,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-dark" data-bs-dismiss="modal" @click="checkSleepData">
+          <button class="btn btn-dark" @click="checkSleepData">
             保存
           </button>
         </div>
@@ -402,8 +402,10 @@ function checkSleepData() {
   }
   if (errors.length == 0) {
     upsertMood();
+    modal.hide()
   } else {
     alert(errors.join("\n"))
+    modal.show();
   }
 }
 
