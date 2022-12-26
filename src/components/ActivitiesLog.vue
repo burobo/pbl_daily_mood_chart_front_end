@@ -210,7 +210,7 @@ const {
   method: "POST",
   baseURL: config.public.API_PROXY_BASE_URL,
   body: {
-    user_id: "1",
+    user_id: config.public.USER_ID,
   },
   async onRequest({ request, options }) {
     options.body.start_date = startDate.value.replace(/-/g, '')
@@ -228,11 +228,10 @@ async function upsertMood() {
     method: "POST",
     baseURL: config.public.API_PROXY_BASE_URL,
     body: {
-      user_id: "1",
+      user_id: config.public.USER_ID,
     },
     initialCache: false,
     async onRequest({ request, options }) {
-      options.body.user_id = "1";
       options.body.date = `${selectedDateRef.value.getFullYear()}${zeroPadding(
         2,
         selectedDateRef.value.getMonth() + 1
@@ -281,7 +280,7 @@ async function fetchDailyMood() {
     method: "POST",
     baseURL: config.public.API_PROXY_BASE_URL,
     body: {
-      user_id: "1",
+      user_id: config.public.USER_ID,
     },
     initialCache: false,
     async onRequest({ request, options }) {

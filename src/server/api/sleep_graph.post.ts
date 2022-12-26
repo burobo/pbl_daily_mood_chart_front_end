@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
         method: "POST",
         baseURL: config.public.API_BASE_URL,
         body: {
-            user_id: "1"
+            user_id: config.public.USER_ID
         },
         async onRequest({request, options}) {
           options.body.start_date = reqBody.start_date;
