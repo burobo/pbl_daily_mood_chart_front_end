@@ -19,7 +19,7 @@ export default {
         method: "POST",
         baseURL: config.public.API_PROXY_BASE_URL,
         body: {
-          user_id: "1",
+          user_id: config.public.USER_ID,
           date: this.targetDate,
           mood: this.mood.toString(),
         },
@@ -31,7 +31,7 @@ export default {
         method: "DELETE",
         baseURL: config.public.API_PROXY_BASE_URL,
         body: {
-          user_id: "1",
+          user_id: config.public.USER_ID,
           date: this.targetDate,
         },
       });
