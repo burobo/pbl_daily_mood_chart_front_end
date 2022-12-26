@@ -407,6 +407,7 @@ function checkSleepData() {
   if (errors.length == 0) {
     upsertMood();
     modal.hide()
+    validationErrors.value = ""
   } else {
     validationErrors.value = errors.join("\n")
     modal.show();
