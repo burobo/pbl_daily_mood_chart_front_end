@@ -19,6 +19,9 @@
         </div>
         <div class="modal-body p-4">
           <div class="mb-3">
+            <p class="text-danger" style="white-space: pre-line">
+              {{ validationErrors }}
+            </p>
             <div class="form-label fw-bold">気分</div>
             <div class="d-flex aligh-item-center justify-content-center">
               <div>
@@ -110,7 +113,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-dark" data-bs-dismiss="modal" @click="upsertMood">
+          <button class="btn btn-dark" @click="checkSleepData">
             保存
           </button>
         </div>
@@ -177,6 +180,7 @@ const activityTypes = ["運動", "通勤", "入浴", "通院"]
 const sumSleepMinutes = computed(() => sleepRecoredsRefWrap.sleepRecordsRef.value.reduce((a, c) => a + c.sleepMinutes(), 0))
 const actualSleepMinutes = computed(() => actualSleepMinutesRef.value === null ? "-" : actualSleepMinutesRef.value)
 const sleepEfficiency = computed(() => sumSleepMinutes.value === 0 ? "-" : ((actualSleepMinutesRef.value / sumSleepMinutes.value) * 100).toFixed(2))
+const validationErrors = ref("")
 
 let modal = null;
 const domLayout = "autoHeight";
@@ -345,6 +349,75 @@ function removeActivityRecord(idx) {
   const copiedActivityRecord = [...activityRecordsRef.value];
   copiedActivityRecord.splice(idx, 1);
   activityRecordsRef.value = copiedActivityRecord;
+}
+
+function checkSleepData() {
+  const afterPM4Yesterday = new Date(
+    selectedDateRef.value.getFullYear(),
+    selectedDateRef.value.getMonth(),
+    selectedDateRef.value.getDate() - 1,
+    16
+  )
+  const beforePM4Today = new Date(
+    selectedDateRef.value.getFullYear(),
+    selectedDateRef.value.getMonth(),
+    selectedDateRef.value.getDate(),
+    15, 59
+  )
+
+  let isBeforePM4Yesterday = false
+  let isAfterPM4Today = false
+  let isStartTimeAfterEndTime = false
+  const startDateTimeArray = []
+  const endDateTimeArray = []
+  for (let s of sleepRecordsRef.value) {
+    const startDateTime = new Date(s.sleep_start_time)
+    const endDateTime = new Date(s.sleep_end_time)
+    startDateTimeArray.push(startDateTime)
+    endDateTimeArray.push(endDateTime)
+
+    if (startDateTime < afterPM4Yesterday) {
+      isBeforePM4Yesterday = true
+    }
+    if (endDateTime > beforePM4Today) {
+      isAfterPM4Today = true
+    }
+    if (startDateTime > endDateTime) {
+      isStartTimeAfterEndTime = true
+    }
+  }
+
+  const ascStartDateTimeArray = [...startDateTimeArray].sort((a, b) => new Date(a) - new Date(b));
+  const ascEndDateTimeArray = [...endDateTimeArray].sort((a, b) => new Date(a) - new Date(b));
+  let hasDuplicateSleepTime = false
+
+  for (let i = 0; i < ascStartDateTimeArray.length; i++) {
+    if (ascStartDateTimeArray[i + 1] < ascEndDateTimeArray[i]) {
+      hasDuplicateSleepTime = true
+    }
+  }
+
+  const errors = []
+  if (isBeforePM4Yesterday) {
+    errors.push("・開始時間は前日の16時以降にしてください")
+  }
+  if (isAfterPM4Today) {
+    errors.push("・終了時間は当日の15時59分より前にしてください")
+  }
+  if (isStartTimeAfterEndTime) {
+    errors.push("・開始時間は終了時間より前にしてください")
+  }
+  if (hasDuplicateSleepTime) {
+    errors.push("・睡眠時間の重複がないようにしてください")
+  }
+  if (errors.length == 0) {
+    upsertMood();
+    modal.hide()
+    validationErrors.value = ""
+  } else {
+    validationErrors.value = errors.join("\n")
+    modal.show();
+  }
 }
 
 watch(startDate, tableRowsRefresh);
