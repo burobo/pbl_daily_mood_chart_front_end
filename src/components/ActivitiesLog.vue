@@ -44,6 +44,9 @@
               <button class="btn btn-outline-secondary btn-sm" @click="addSleepRecord">
                 追加
               </button>
+              <button class="btn btn-outline-secondary btn-sm" @click="fetchFitbitSleep()">
+                Fitbitの睡眠記録を取得
+              </button>
             </div>
             <div class="row" v-for="(sleepRecordRef, idx) in sleepRecoredsRefWrap.sleepRecordsRef.value" :key="idx">
               <div class="col">
@@ -238,6 +241,7 @@ async function upsertMood() {
       options.body.sleeps = sleepRecordsRef.value;
       options.body.memo = memoRef.value;
       options.body.activities = activityRecordsRef.value;
+      options.body.sleep_minutes = actualSleepMinutesRef.value
     },
   });
 }
@@ -289,6 +293,7 @@ async function fetchDailyMood() {
         selectedMoodRef.value = null;
         sleepRecordsRef.value = [];
         memoRef.value = "";
+        actualSleepMinutesRef.value = null;
         return;
       }
       selectedMoodRef.value = response._data[0].mood;
@@ -331,8 +336,8 @@ onMounted(() => {
   tableRowsRefresh()
 });
 
-function addSleepRecord() {
-  sleepRecordsRef.value = [...sleepRecordsRef.value, new SleepRecord()];
+function addSleepRecord(sleepRecord) {
+  sleepRecordsRef.value = [...sleepRecordsRef.value, sleepRecord instanceof SleepRecord ?  sleepRecord : new SleepRecord()];
 }
 
 function removeSleepRecord(idx) {
@@ -341,7 +346,7 @@ function removeSleepRecord(idx) {
   sleepRecordsRef.value = copiedSleepRecord;
 }
 
-function addActivityRecord() {
+function addActivityRecord(activityRecord) {
   activityRecordsRef.value = [...activityRecordsRef.value, new ActivityRecord()];
 }
 
@@ -422,6 +427,51 @@ function checkSleepData() {
 
 watch(startDate, tableRowsRefresh);
 watch(endDate, tableRowsRefresh);
+
+async function fetchFitbitSleep() {
+  const accessToken = localStorage.getItem('access_token')
+  const userId = localStorage.getItem('user_id')
+  if (!accessToken || !userId) {
+    alert('メニューからFitbitにログインしてください。')
+    return
+  }
+  const {
+    data: fitbitSleepData,
+    pending: fitbitSleepPending,
+    error: fitbitSleepError,
+    refresh: fitbitSleepRefresh,
+  } = await useFetch("/fetch_fitbit_sleep", {
+    baseURL: config.public.API_PROXY_BASE_URL,
+    initialCache: false,
+    params: {
+      date: `${selectedDateRef.value.getFullYear()}-${zeroPadding(
+        2,
+        selectedDateRef.value.getMonth() + 1
+      )}-${zeroPadding(2, selectedDateRef.value.getDate())}`,
+      user_id: userId,
+      access_token: accessToken,
+    },
+    async onResponse({ request, options, response }) {
+      switch (response.status) {
+        case 200:
+          break;
+        case 401:
+          alert('メニューからFitbitにログインしてください。')
+          return;
+        default:
+          console.log(response)
+          alert('原因不明のエラーです。')
+          return;
+      }
+      if (response._data.sleep.length === 0) {
+        alert('Fitbitの睡眠記録がありません。')
+        return
+      }
+      actualSleepMinutesRef.value = response._data.minutesAsleep
+      response._data.sleep.forEach(sleep => addSleepRecord(new SleepRecord(new Date(sleep.startTime), new Date(sleep.endTime))))
+    },
+  })
+}
 
 </script>
 
