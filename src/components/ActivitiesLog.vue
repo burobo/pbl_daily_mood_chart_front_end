@@ -19,6 +19,9 @@
         </div>
         <div class="modal-body p-4">
           <div class="mb-3">
+            <p class="text-danger" style="white-space: pre-line">
+              {{ validationErrors }}
+            </p>
             <div class="form-label fw-bold">気分</div>
             <div class="d-flex aligh-item-center justify-content-center">
               <div>
@@ -177,6 +180,7 @@ const activityTypes = ["運動", "通勤", "入浴", "通院"]
 const sumSleepMinutes = computed(() => sleepRecoredsRefWrap.sleepRecordsRef.value.reduce((a, c) => a + c.sleepMinutes(), 0))
 const actualSleepMinutes = computed(() => actualSleepMinutesRef.value === null ? "-" : actualSleepMinutesRef.value)
 const sleepEfficiency = computed(() => sumSleepMinutes.value === 0 ? "-" : ((actualSleepMinutesRef.value / sumSleepMinutes.value) * 100).toFixed(2))
+const validationErrors = ref("")
 
 let modal = null;
 const domLayout = "autoHeight";
@@ -404,7 +408,7 @@ function checkSleepData() {
     upsertMood();
     modal.hide()
   } else {
-    alert(errors.join("\n"))
+    validationErrors.value = errors.join("\n")
     modal.show();
   }
 }
