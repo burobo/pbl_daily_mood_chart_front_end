@@ -376,9 +376,15 @@ function checkSleepData() {
     startDateTimeArray.push(startDateTime)
     endDateTimeArray.push(endDateTime)
 
-    isBeforePM4Yesterday = startDateTime < afterPM4Yesterday
-    isAfterPM4Today = endDateTime > beforePM4Today
-    isStartTimeAfterEndTime = startDateTime > endDateTime
+    if (startDateTime < afterPM4Yesterday) {
+      isBeforePM4Yesterday = true
+    }
+    if (endDateTime > beforePM4Today) {
+      isAfterPM4Today = true
+    }
+    if (startDateTime > endDateTime) {
+      isStartTimeAfterEndTime = true
+    }
   }
 
   const ascStartDateTimeArray = [...startDateTimeArray].sort((a, b) => new Date(a) - new Date(b));
