@@ -13,10 +13,19 @@ Globals:
   Api:
     TracingEnabled: True
 
-Parameters:
-  APIBASEURL:
-    Type: AWS::SSM::Parameter::Value<String>
-    Default: 'API_BASE_URL'
+# Parameters:
+#   APIBASEURL:
+#     Type: AWS::SSM::Parameter::Value<String>
+#     Default: 'API_BASE_URL'
+#   FITBITCLIENTID:
+#     Type: AWS::SSM::Parameter::Value<String>
+#     Default: 'FITBIT_CLIENT_ID'
+#   FITBITCLIENTSECRET:
+#     Type: AWS::SSM::Parameter::Value<String>
+#     Default: 'FITBIT_CLIENT_SECRET'
+#   USERID:
+#     Type: AWS::SSM::Parameter::Value<String>
+#     Default: 'USER_ID'
 
 Resources:
   DMCFrontendFunction:
@@ -29,10 +38,12 @@ Resources:
         - x86_64
       FunctionUrlConfig:
         AuthType: NONE
-      Environment:
-        Variables:
-          API_BASE_URL: !Ref APIBASEURL
-
+      # Environment:
+      #   Variables:
+      #     API_BASE_URL: !Ref APIBASEURL
+      #     FITBIT_CLIENT_ID: !Ref FITBITCLIENTID
+      #     FITBIT_CLIENT_SECRET: !Ref FITBITCLIENTSECRET
+      #     USER_ID: !Ref USERID
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
