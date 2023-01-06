@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     let res
     const { data, pending, error, refresh } = await ofetch("", {
         method: "GET",
-        baseURL: `https://api.fitbit.com/1.2/user/${reqQuery.user_id}/sleep/date/${reqQuery.date}.json`, 
+        baseURL: `https://api.fitbit.com/1.2/user/${reqQuery.user_id}/sleep/date/${reqQuery.start_date}/${reqQuery.end_date}.json`, 
         headers: {
           accept: "application/json",
           authorization: `Bearer ${reqQuery.access_token}`,

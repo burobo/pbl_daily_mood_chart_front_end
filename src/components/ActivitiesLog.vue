@@ -443,10 +443,8 @@ async function fetchFitbitSleep() {
     baseURL: config.public.API_PROXY_BASE_URL,
     initialCache: false,
     params: {
-      date: `${selectedDateRef.value.getFullYear()}-${zeroPadding(
-        2,
-        selectedDateRef.value.getMonth() + 1
-      )}-${zeroPadding(2, selectedDateRef.value.getDate())}`,
+      start_date: dateToYmdWithHyphen(new Date(new Date(selectedDateRef.value.getTime()).setDate(selectedDateRef.value.getDate() - 1))),
+      end_date: dateToYmdWithHyphen(new Date(new Date(selectedDateRef.value.getTime()).setDate(selectedDateRef.value.getDate() + 1))),
       user_id: userId,
       access_token: accessToken,
     },
@@ -467,11 +465,20 @@ async function fetchFitbitSleep() {
         return
       }
       actualSleepMinutesRef.value = response._data.minutesAsleep
-      response._data.sleep.forEach(sleep => addSleepRecord(new SleepRecord(new Date(sleep.startTime), new Date(sleep.endTime))))
+      response._data.sleep
+        .filter(sleep => new Date(sleep.startTime) >= new Date(selectedDateRef.value.getFullYear(), selectedDateRef.value.getMonth(), selectedDateRef.value.getDate() - 1, 16))
+        .filter(sleep => new Date(sleep.endTime) <= new Date(selectedDateRef.value.getFullYear(), selectedDateRef.value.getMonth(), selectedDateRef.value.getDate(), 15, 59))
+        .forEach(sleep => addSleepRecord(new SleepRecord(new Date(sleep.startTime), new Date(sleep.endTime))))
     },
   })
 }
 
+function dateToYmdWithHyphen(date) {
+  return `${date.getFullYear()}-${zeroPadding(
+    2,
+    date.getMonth() + 1
+  )}-${zeroPadding(2, date.getDate())}`;
+}
 </script>
 
 <style lang="scss">
