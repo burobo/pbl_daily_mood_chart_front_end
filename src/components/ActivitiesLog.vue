@@ -75,10 +75,11 @@
             .activityRecordsRef.value" :key="idx" class="mb-2 border border-2">
               <div class="row justify-content-center mb-1">
                 <div class="col">
-                  <select class="col form-select"
-                    v-model="activityRecoredsRefWrap.activityRecordsRef.value[idx].activity_type">
+                  <input class="col form-select" type="text" list="activityTypes"
+                    v-model="activityRecoredsRefWrap.activityRecordsRef.value[idx].activity_type" />
+                  <datalist id="activityTypes">
                     <option v-for="activityType in activityTypes">{{ activityType }}</option>
-                  </select>
+                  </datalist>
                 </div>
               </div>
               <div class="row">
@@ -336,7 +337,7 @@ onMounted(() => {
 });
 
 function addSleepRecord(sleepRecord) {
-  sleepRecordsRef.value = [...sleepRecordsRef.value, sleepRecord instanceof SleepRecord ?  sleepRecord : new SleepRecord()];
+  sleepRecordsRef.value = [...sleepRecordsRef.value, sleepRecord instanceof SleepRecord ? sleepRecord : new SleepRecord()];
 }
 
 function removeSleepRecord(idx) {
