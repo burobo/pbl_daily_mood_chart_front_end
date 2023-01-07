@@ -78,7 +78,7 @@
                   <input class="col form-select" type="text" list="activityTypes"
                     v-model="activityRecoredsRefWrap.activityRecordsRef.value[idx].activity_type" />
                   <button class="btn btn-outline-danger btn-sm"
-                    @click="deleteActivityType(activityRecoredsRefWrap.activityRecordsRef.value[idx].activity_type)">×</button>
+                    @click="deleteActivityType(activityRecoredsRefWrap.activityRecordsRef.value[idx].activity_type)">候補削除</button>
                   <datalist id="activityTypes">
                     <option v-for="activityType in activityTypes">{{ activityType }}</option>
                   </datalist>
