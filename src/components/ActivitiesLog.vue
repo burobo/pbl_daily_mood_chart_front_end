@@ -197,7 +197,22 @@ const columnDefs = [
       }
     }
   },
-  { field: "気分" },
+  {
+    field:"気分",
+    cellRenderer: params => {
+      console.log(params)
+      const element = document.createElement('div')
+      element.classList.add('d-flex', 'aligh-item-center', 'justify-content-center')
+      element.innerHTML = `<div>
+<input class="btn btn-sm ${params.value === '😢' ? 'btn-primary':'btn-outline-secondary'}" type="button" value="😢" disabled/>
+<input class="btn btn-sm ${params.value === '🙁' ? 'btn-primary':'btn-outline-secondary'}" type="button" value="🙁" disabled/>
+<input class="btn btn-sm ${params.value === '😐' ? 'btn-primary':'btn-outline-secondary'}" type="button" value="😐" disabled/>
+<input class="btn btn-sm ${params.value === '😃' ? 'btn-primary':'btn-outline-secondary'}" type="button" value="😃" disabled/>
+<input class="btn btn-sm ${params.value === '😄' ? 'btn-primary':'btn-outline-secondary'}" type="button" value="😄" disabled/>
+</div>`;
+      return element;
+    }
+  },
   { field: "メモ" },
   { field: "実睡眠時間" },
   { field: "睡眠時間" },
