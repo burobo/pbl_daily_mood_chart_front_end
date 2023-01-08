@@ -69,16 +69,34 @@
 </style>
 
 <script setup>
-import { ref, provide } from 'vue'
+import { ref, provide, watch } from 'vue'
 
-let d = new Date()
-const startDate = ref([d.getFullYear(), d.getMonth(), '01'].join('-'));
-const endDate = ref([d.getFullYear(), d.getMonth() + 1, d.getDate()].join('-'));
+const startDate = ref();
+const endDate = ref();
 const activeTab = ref('table')
 
 provide('startDate', startDate)
 provide('endDate', endDate)
+watch(startDate, setStartDate)
+watch(endDate, setEndDate)
 
+function zeroPadding(digit, str) {
+  return ("0".repeat(digit) + str).slice(-digit);
+}
+
+function setStartDate() {
+  localStorage.setItem('startDate', startDate.value)
+}
+function setEndDate() {
+  localStorage.setItem('endDate', endDate.value)
+}
+
+onMounted(() => {
+  let d = new Date()
+  const defaultStartDate = new Date(d.getFullYear(), d.getMonth() - 1, 1);
+  startDate.value = localStorage.getItem('startDate') || [defaultStartDate.getFullYear(), zeroPadding(2, defaultStartDate.getMonth() + 1), zeroPadding(2, defaultStartDate.getDate())].join('-');
+  endDate.value = localStorage.getItem('endDate') || [d.getFullYear(), zeroPadding(2, d.getMonth() + 1), zeroPadding(2, d.getDate())].join('-');
+})
 </script>
 
 <style lang="scss">
