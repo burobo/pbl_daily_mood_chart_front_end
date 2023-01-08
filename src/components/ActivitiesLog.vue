@@ -188,12 +188,20 @@ const validationErrors = ref("")
 let modal = null;
 const domLayout = "autoHeight";
 const columnDefs = [
-  { field: "日付" },
+  { 
+    field: "日付",
+    cellStyle: params => {
+      const holidayRegExp = /^.*\(土|日\)$/g;
+      if(Array.isArray(holidayRegExp.exec(params.value))) {
+        return {color: 'red'}
+      }
+    }
+  },
   { field: "気分" },
   { field: "メモ" },
   { field: "実睡眠時間" },
   { field: "睡眠時間" },
-  { field: "睡眠効率" }
+  { field: "睡眠効率" },
 ];
 const defaultColDef = {
   sortable: true,
