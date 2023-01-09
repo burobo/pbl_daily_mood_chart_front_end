@@ -189,7 +189,7 @@ let modal = null;
 const domLayout = "autoHeight";
 const columnDefs = [
   { field: "日付" },
-  { field: "気分" },
+  { field: "気分", cellStyle: params => params.value ? { color: "#0d6efd", fontSize: "1.25rem" } : null },
   { field: "メモ" },
   { field: "実睡眠時間" },
   { field: "睡眠時間" },
@@ -336,7 +336,7 @@ onMounted(() => {
 });
 
 function addSleepRecord(sleepRecord) {
-  sleepRecordsRef.value = [...sleepRecordsRef.value, sleepRecord instanceof SleepRecord ?  sleepRecord : new SleepRecord()];
+  sleepRecordsRef.value = [...sleepRecordsRef.value, sleepRecord instanceof SleepRecord ? sleepRecord : new SleepRecord()];
 }
 
 function removeSleepRecord(idx) {

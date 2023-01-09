@@ -42,7 +42,9 @@ function formatReponse(res, startDate, endDate) {
             : 0;
         const actualSleepMinutes = Number(rowInRes.sleep_minutes || 0)
         formatted.日付 = `${date.getMonth() + 1}/${date.getDate()}`
-        formatted.気分 = rowInRes.mood === null ? "" : ["😢","🙁","😐","😃","😄"][Number(rowInRes.mood)]
+        const moods = ["😢", "🙁", "😐", "😃", "😄"]
+        moods[Number(rowInRes.mood)] = `*${moods[Number(rowInRes.mood)]}*`
+        formatted.気分 = rowInRes.mood === null ? "" : moods.join("")
         formatted.メモ = rowInRes.memo
         formatted.実睡眠時間 = minutesToHHcolonMM(actualSleepMinutes)
         formatted.睡眠時間 = minutesToHHcolonMM(sumSleepMinutes)
