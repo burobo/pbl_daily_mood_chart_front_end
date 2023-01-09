@@ -61,6 +61,7 @@ export default defineEventHandler(async (event) => {
                 const format = {
                     "日付": `${date.getMonth() + 1}/${date.getDate()}`,
                     "気分": "",
+                    "メモ": "",
                     "0" :"",
                     "1" :"",
                     "2" :"",
@@ -93,6 +94,7 @@ export default defineEventHandler(async (event) => {
                 const moods = ["😢", "🙁", "😐", "😃", "😄"]
                 moods[Number(rowInRes.mood)] = `*${moods[Number(rowInRes.mood)]}*`
                 format.気分 = rowInRes.mood === null ? "" : moods.join("")
+                format.メモ = rowInRes.memo
                 sleepHours.forEach(sleepHour=>{
                     if(date.getFullYear()==sleepHour.getFullYear() && date.getMonth()==sleepHour.getMonth() && date.getDate()==sleepHour.getDate()){
                         const hours = sleepHour.getHours().toString();
