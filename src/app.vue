@@ -21,7 +21,7 @@
 .menu-btn {
   position: fixed;
   top: 20px;
-  right: 20px;
+  right: 2px;
   z-index: 3;
   width: 40px;
   height: 40px;
