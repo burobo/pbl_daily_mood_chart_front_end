@@ -188,12 +188,41 @@ const validationErrors = ref("")
 let modal = null;
 const domLayout = "autoHeight";
 const columnDefs = [
-  { field: "日付" },
-  { field: "気分" },
+  { 
+    field: "日付",
+    cellStyle: params => {
+      const format = {
+        color: null
+      }
+      const saturdayRegExp = /^.*\(土\)$/g;
+      const sundayRegExp = /^.*\(日\)$/g;
+      if(Array.isArray(saturdayRegExp.exec(params.value))) {
+        format.color = 'blue';
+      } else if (Array.isArray(sundayRegExp.exec(params.value))) {
+        format.color = 'red';
+      }
+      return format
+    }
+  },
+  {
+    field:"気分",
+    cellRenderer: params => {
+      const element = document.createElement('div')
+      element.classList.add('d-flex', 'aligh-item-center', 'justify-content-center')
+      element.innerHTML = `<div>
+<input class="btn btn-sm ${params.value === '😢' ? 'btn-primary':'btn-outline-secondary'}" type="button" value="😢" disabled/>
+<input class="btn btn-sm ${params.value === '🙁' ? 'btn-primary':'btn-outline-secondary'}" type="button" value="🙁" disabled/>
+<input class="btn btn-sm ${params.value === '😐' ? 'btn-primary':'btn-outline-secondary'}" type="button" value="😐" disabled/>
+<input class="btn btn-sm ${params.value === '😃' ? 'btn-primary':'btn-outline-secondary'}" type="button" value="😃" disabled/>
+<input class="btn btn-sm ${params.value === '😄' ? 'btn-primary':'btn-outline-secondary'}" type="button" value="😄" disabled/>
+</div>`;
+      return element;
+    }
+  },
   { field: "メモ" },
   { field: "実睡眠時間" },
   { field: "睡眠時間" },
-  { field: "睡眠効率" }
+  { field: "睡眠効率" },
 ];
 const defaultColDef = {
   sortable: true,
