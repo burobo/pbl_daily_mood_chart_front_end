@@ -191,10 +191,17 @@ const columnDefs = [
   { 
     field: "日付",
     cellStyle: params => {
-      const holidayRegExp = /^.*\(土|日\)$/g;
-      if(Array.isArray(holidayRegExp.exec(params.value))) {
-        return {color: 'red'}
+      const format = {
+        color: null
       }
+      const saturdayRegExp = /^.*\(土\)$/g;
+      const sundayRegExp = /^.*\(日\)$/g;
+      if(Array.isArray(saturdayRegExp.exec(params.value))) {
+        format.color = 'blue';
+      } else if (Array.isArray(sundayRegExp.exec(params.value))) {
+        format.color = 'red';
+      }
+      return format
     }
   },
   {
