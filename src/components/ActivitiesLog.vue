@@ -74,11 +74,14 @@
             <div v-for="(activityRecordRef, idx) in activityRecoredsRefWrap
             .activityRecordsRef.value" :key="idx" class="mb-2 border border-2">
               <div class="row justify-content-center mb-1">
-                <div class="col">
-                  <select class="col form-select"
-                    v-model="activityRecoredsRefWrap.activityRecordsRef.value[idx].activity_type">
+                <div class="col d-flex">
+                  <input class="col form-select" type="text" list="activityTypes"
+                    v-model="activityRecoredsRefWrap.activityRecordsRef.value[idx].activity_type" />
+                  <button class="btn btn-outline-danger btn-sm"
+                    @click="deleteActivityType(activityRecoredsRefWrap.activityRecordsRef.value[idx].activity_type)">候補削除</button>
+                  <datalist id="activityTypes">
                     <option v-for="activityType in activityTypes">{{ activityType }}</option>
-                  </select>
+                  </datalist>
                 </div>
               </div>
               <div class="row">
@@ -365,7 +368,7 @@ onMounted(() => {
 });
 
 function addSleepRecord(sleepRecord) {
-  sleepRecordsRef.value = [...sleepRecordsRef.value, sleepRecord instanceof SleepRecord ?  sleepRecord : new SleepRecord()];
+  sleepRecordsRef.value = [...sleepRecordsRef.value, sleepRecord instanceof SleepRecord ? sleepRecord : new SleepRecord()];
 }
 
 function removeSleepRecord(idx) {
@@ -450,6 +453,13 @@ function checkSleepData() {
   } else {
     validationErrors.value = errors.join("\n")
     modal.show();
+  }
+}
+
+function deleteActivityType(activityType) {
+  const index = activityTypes.indexOf(activityType)
+  if (index > -1) {
+    activityTypes.splice(index, 1)
   }
 }
 
