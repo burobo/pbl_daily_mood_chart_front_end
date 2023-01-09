@@ -66,6 +66,7 @@ const styleClinic   = { backgroundColor: "#34a853", fontSize: 0, borderRight: "d
 // Each Column Definition results in one Column.
 const columnDefs = [
   { field: "日付", filter: false, minWidth: 90 },
+  { field: "気分", minWidth: 120, cellStyle: params => params.value ? { color: "#0d6efd" } : null },
   { field: "0", filter: false, sortable: false, cellStyle: params => {
     if(params.value=="sleep")    return styleSleep
     if(params.value=="exercise") return styleExercise

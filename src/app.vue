@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-5">
+  <div class="mx-1 mt-3">
     <button type="button" class="menu-btn" @click="open = !open">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list"
         aria-hidden="true" viewBox="0 0 16 16">
