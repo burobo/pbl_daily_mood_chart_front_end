@@ -74,11 +74,14 @@
             <div v-for="(activityRecordRef, idx) in activityRecoredsRefWrap
             .activityRecordsRef.value" :key="idx" class="mb-2 border border-2">
               <div class="row justify-content-center mb-1">
-                <div class="col">
-                  <select class="col form-select"
-                    v-model="activityRecoredsRefWrap.activityRecordsRef.value[idx].activity_type">
+                <div class="col d-flex">
+                  <input class="col form-select" type="text" list="activityTypes"
+                    v-model="activityRecoredsRefWrap.activityRecordsRef.value[idx].activity_type" />
+                  <button class="btn btn-outline-danger btn-sm"
+                    @click="deleteActivityType(activityRecoredsRefWrap.activityRecordsRef.value[idx].activity_type)">候補削除</button>
+                  <datalist id="activityTypes">
                     <option v-for="activityType in activityTypes">{{ activityType }}</option>
-                  </select>
+                  </datalist>
                 </div>
               </div>
               <div class="row">
@@ -188,12 +191,41 @@ const validationErrors = ref("")
 let modal = null;
 const domLayout = "autoHeight";
 const columnDefs = [
-  { field: "日付" },
-  { field: "気分", cellStyle: params => params.value ? { color: "#0d6efd" } : null },
+  {
+    field: "日付",
+    cellStyle: params => {
+      const format = {
+        color: null
+      }
+      const saturdayRegExp = /^.*\(土\)$/g;
+      const sundayRegExp = /^.*\(日\)$/g;
+      if (Array.isArray(saturdayRegExp.exec(params.value))) {
+        format.color = 'blue';
+      } else if (Array.isArray(sundayRegExp.exec(params.value))) {
+        format.color = 'red';
+      }
+      return format
+    }
+  },
+  {
+    field: "気分",
+    cellRenderer: params => {
+      const element = document.createElement('div')
+      element.classList.add('d-flex', 'aligh-item-center', 'justify-content-center')
+      element.innerHTML = `<div>
+<input class="btn btn-sm ${params.value === '😢' ? 'btn-primary' : 'btn-outline-secondary'}" type="button" value="😢" disabled/>
+<input class="btn btn-sm ${params.value === '🙁' ? 'btn-primary' : 'btn-outline-secondary'}" type="button" value="🙁" disabled/>
+<input class="btn btn-sm ${params.value === '😐' ? 'btn-primary' : 'btn-outline-secondary'}" type="button" value="😐" disabled/>
+<input class="btn btn-sm ${params.value === '😃' ? 'btn-primary' : 'btn-outline-secondary'}" type="button" value="😃" disabled/>
+<input class="btn btn-sm ${params.value === '😄' ? 'btn-primary' : 'btn-outline-secondary'}" type="button" value="😄" disabled/>
+</div>`;
+      return element;
+    }
+  },
   { field: "メモ" },
   { field: "実睡眠時間" },
   { field: "睡眠時間" },
-  { field: "睡眠効率" }
+  { field: "睡眠効率" },
 ];
 const defaultColDef = {
   sortable: true,
@@ -424,6 +456,13 @@ function checkSleepData() {
   }
 }
 
+function deleteActivityType(activityType) {
+  const index = activityTypes.indexOf(activityType)
+  if (index > -1) {
+    activityTypes.splice(index, 1)
+  }
+}
+
 watch(startDate, tableRowsRefresh);
 watch(endDate, tableRowsRefresh);
 
@@ -443,10 +482,8 @@ async function fetchFitbitSleep() {
     baseURL: config.public.API_PROXY_BASE_URL,
     initialCache: false,
     params: {
-      date: `${selectedDateRef.value.getFullYear()}-${zeroPadding(
-        2,
-        selectedDateRef.value.getMonth() + 1
-      )}-${zeroPadding(2, selectedDateRef.value.getDate())}`,
+      start_date: dateToYmdWithHyphen(new Date(new Date(selectedDateRef.value.getTime()).setDate(selectedDateRef.value.getDate() - 1))),
+      end_date: dateToYmdWithHyphen(new Date(new Date(selectedDateRef.value.getTime()).setDate(selectedDateRef.value.getDate() + 1))),
       user_id: userId,
       access_token: accessToken,
     },
@@ -467,11 +504,20 @@ async function fetchFitbitSleep() {
         return
       }
       actualSleepMinutesRef.value = response._data.minutesAsleep
-      response._data.sleep.forEach(sleep => addSleepRecord(new SleepRecord(new Date(sleep.startTime), new Date(sleep.endTime))))
+      response._data.sleep
+        .filter(sleep => new Date(sleep.startTime) >= new Date(selectedDateRef.value.getFullYear(), selectedDateRef.value.getMonth(), selectedDateRef.value.getDate() - 1, 16))
+        .filter(sleep => new Date(sleep.endTime) <= new Date(selectedDateRef.value.getFullYear(), selectedDateRef.value.getMonth(), selectedDateRef.value.getDate(), 15, 59))
+        .forEach(sleep => addSleepRecord(new SleepRecord(new Date(sleep.startTime), new Date(sleep.endTime))))
     },
   })
 }
 
+function dateToYmdWithHyphen(date) {
+  return `${date.getFullYear()}-${zeroPadding(
+    2,
+    date.getMonth() + 1
+  )}-${zeroPadding(2, date.getDate())}`;
+}
 </script>
 
 <style lang="scss">
