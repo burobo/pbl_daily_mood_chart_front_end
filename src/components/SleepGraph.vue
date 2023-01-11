@@ -66,9 +66,10 @@ const styleClinic   = { backgroundColor: "#34a853", fontSize: 0, borderRight: "d
 
 // Each Column Definition results in one Column.
 const columnDefs = [
-  { field: "日付", filter: false, minWidth: 80 },
+  { field: "日付", minWidth: 70, filter: false, cellStyle: { width: "initial" } },
   {
     field: "気分",
+    minWidth: 180,
     cellRenderer: params => {
       const element = document.createElement('div')
       element.classList.add('d-flex', 'align-item-center', 'justify-content-center')
@@ -82,7 +83,7 @@ const columnDefs = [
       return element;
     }
   },
-  { field: "メモ", filter: false, minWidth: 120, wrapText: true, cellStyle: params => params.value ? { fontSize: "0.7rem" } : null },
+  { field: "メモ", filter: false, wrapText: true, minWidth: 70, cellStyle: params => params.value ? { width: "initial" } : null },
   { field: "0", filter: false, sortable: false, cellStyle: params => {
     if(params.value=="sleep")    return styleSleep
     if(params.value=="exercise") return styleExercise
