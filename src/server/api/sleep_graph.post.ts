@@ -59,7 +59,9 @@ export default defineEventHandler(async (event) => {
             }).flat();
             res = datesBetween(formatYYYYMMDDToJSDate(reqBody.start_date), formatYYYYMMDDToJSDate(reqBody.end_date)).map(date=>{
                 const format = {
-                    "日付":`${date.getMonth() + 1}/${date.getDate()}`,
+                    "日付": `${date.getMonth() + 1}/${date.getDate()}`,
+                    "気分": "",
+                    "メモ": "",
                     "0" :"",
                     "1" :"",
                     "2" :"",
@@ -84,7 +86,13 @@ export default defineEventHandler(async (event) => {
                     "21": "",
                     "22": "",
                     "23": ""
-                };
+              };
+                const rowInRes = response._data.find(resRow => formatYYYYMMDDToJSDate(resRow.date).getTime() == date.getTime())
+                if (!rowInRes) {
+                  return format;
+                }
+                format.気分 = rowInRes.mood === null ? "" : ["😢","🙁","😐","😃","😄"][Number(rowInRes.mood)]
+                format.メモ = rowInRes.memo
                 sleepHours.forEach(sleepHour=>{
                     if(date.getFullYear()==sleepHour.getFullYear() && date.getMonth()==sleepHour.getMonth() && date.getDate()==sleepHour.getDate()){
                         const hours = sleepHour.getHours().toString();

@@ -57,15 +57,32 @@ const { data: rowData, pending: tableRowsPending, error: tableRowsError, refresh
   }
 );
 
-const styleSleep    = { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" };
-const styleExercise = { backgroundColor: "#F45656", fontSize: 0, borderRight: "dotted white" };
-const styleWork     = { backgroundColor: "#ffc003", fontSize: 0, borderRight: "dotted white" };
-const styleBath     = { backgroundColor: "#3BC1D9", fontSize: 0, borderRight: "dotted white" };
-const styleClinic   = { backgroundColor: "#34a853", fontSize: 0, borderRight: "dotted white" };
+const styleSleep    = { backgroundColor: "rgb(11 55 105 / 60%)", fontSize: 0, borderRight: "dotted white" };
+const styleExercise = { backgroundColor: "rgb(244 86 86 / 60%)", fontSize: 0, borderRight: "dotted white" };
+const styleWork     = { backgroundColor: "rgb(255 192 3 / 60%)", fontSize: 0, borderRight: "dotted white" };
+const styleBath     = { backgroundColor: "rgb(0 191 255 / 60%)", fontSize: 0, borderRight: "dotted white" };
+const styleClinic   = { backgroundColor: "rgb(52 168 83 / 60%)", fontSize: 0, borderRight: "dotted white" };
 
 // Each Column Definition results in one Column.
 const columnDefs = [
-  { field: "日付", filter: false, minWidth: 90 },
+  { field: "日付", minWidth: 80, filter: false },
+  {
+    field: "気分",
+    minWidth: 180,
+    cellRenderer: params => {
+      const element = document.createElement('div')
+      element.classList.add('d-flex', 'align-item-center', 'justify-content-center')
+      element.innerHTML = `<div>
+<input class="btn btn-sm ${params.value === '😢' ? 'btn-primary' : 'btn-outline-secondary'}" type="button" value="😢" disabled/>
+<input class="btn btn-sm ${params.value === '🙁' ? 'btn-primary' : 'btn-outline-secondary'}" type="button" value="🙁" disabled/>
+<input class="btn btn-sm ${params.value === '😐' ? 'btn-primary' : 'btn-outline-secondary'}" type="button" value="😐" disabled/>
+<input class="btn btn-sm ${params.value === '😃' ? 'btn-primary' : 'btn-outline-secondary'}" type="button" value="😃" disabled/>
+<input class="btn btn-sm ${params.value === '😄' ? 'btn-primary' : 'btn-outline-secondary'}" type="button" value="😄" disabled/>
+</div>`;
+      return element;
+    }
+  },
+  { field: "メモ", filter: false, wrapText: true, minWidth: 60, cellStyle: params => params.value ? { width: "initial", zIndex: 1 } : null },
   { field: "0", filter: false, sortable: false, cellStyle: params => {
     if(params.value=="sleep")    return styleSleep
     if(params.value=="exercise") return styleExercise

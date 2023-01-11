@@ -39,7 +39,7 @@
 }
 
 .bathe-bg {
-  background-color: #3BC1D9;
+  background-color: #00BFFF;
   padding: 20px 25px;
 }
 
