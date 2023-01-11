@@ -82,7 +82,7 @@ const columnDefs = [
       return element;
     }
   },
-  { field: "メモ", filter: false, wrapText: true, minWidth: 60, cellStyle: params => params.value ? { width: "initial" } : null },
+  { field: "メモ", filter: false, wrapText: true, minWidth: 60, cellStyle: params => params.value ? { width: "initial", zIndex: 1 } : null },
   { field: "0", filter: false, sortable: false, cellStyle: params => {
     if(params.value=="sleep")    return styleSleep
     if(params.value=="exercise") return styleExercise
