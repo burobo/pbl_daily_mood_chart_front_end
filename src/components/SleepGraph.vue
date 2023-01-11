@@ -16,7 +16,7 @@
       </tr>
     </table>
   </div>
-  <ag-grid-vue class="ag-theme-alpine" style="height: 500px" :rowHeight="rowHeight" :columnDefs="columnDefs" :rowData="rowData"
+  <ag-grid-vue class="ag-theme-alpine" style="height: 500px" :columnDefs="columnDefs" :rowData="rowData"
     :defaultColDef="defaultColDef" animateRows="true">
   </ag-grid-vue>
 </template>
@@ -38,7 +38,6 @@ import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
 import { inject, watch } from 'vue'
 
-const rowHeight = 120;
 const config = useRuntimeConfig();
 const startDate = inject('startDate')
 const endDate = inject('endDate')
@@ -66,7 +65,7 @@ const styleClinic   = { backgroundColor: "#34a853", fontSize: 0, borderRight: "d
 
 // Each Column Definition results in one Column.
 const columnDefs = [
-  { field: "日付", minWidth: 70, filter: false, cellStyle: { width: "initial" } },
+  { field: "日付", minWidth: 80, filter: false },
   {
     field: "気分",
     minWidth: 180,
@@ -83,7 +82,7 @@ const columnDefs = [
       return element;
     }
   },
-  { field: "メモ", filter: false, wrapText: true, minWidth: 70, cellStyle: params => params.value ? { width: "initial" } : null },
+  { field: "メモ", filter: false, wrapText: true, minWidth: 60, cellStyle: params => params.value ? { width: "initial" } : null },
   { field: "0", filter: false, sortable: false, cellStyle: params => {
     if(params.value=="sleep")    return styleSleep
     if(params.value=="exercise") return styleExercise
