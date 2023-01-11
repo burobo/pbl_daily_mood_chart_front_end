@@ -91,9 +91,7 @@ export default defineEventHandler(async (event) => {
                 if (!rowInRes) {
                   return format;
                 }
-                const moods = ["😢", "🙁", "😐", "😃", "😄"]
-                moods[Number(rowInRes.mood)] = `*${moods[Number(rowInRes.mood)]}*`
-                format.気分 = rowInRes.mood === null ? "" : moods.join("")
+                format.気分 = rowInRes.mood === null ? "" : ["😢","🙁","😐","😃","😄"][Number(rowInRes.mood)]
                 format.メモ = rowInRes.memo
                 sleepHours.forEach(sleepHour=>{
                     if(date.getFullYear()==sleepHour.getFullYear() && date.getMonth()==sleepHour.getMonth() && date.getDate()==sleepHour.getDate()){

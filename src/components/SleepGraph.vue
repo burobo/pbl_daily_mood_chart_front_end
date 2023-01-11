@@ -67,7 +67,21 @@ const styleClinic   = { backgroundColor: "#34a853", fontSize: 0, borderRight: "d
 // Each Column Definition results in one Column.
 const columnDefs = [
   { field: "日付", filter: false, minWidth: 80 },
-  { field: "気分", filter: false, minWidth: 120, cellStyle: params => params.value ? { color: "#0d6efd" } : null },
+  {
+    field: "気分",
+    cellRenderer: params => {
+      const element = document.createElement('div')
+      element.classList.add('d-flex', 'align-item-center', 'justify-content-center')
+      element.innerHTML = `<div>
+<input class="btn btn-sm ${params.value === '😢' ? 'btn-primary' : 'btn-outline-secondary'}" type="button" value="😢" disabled/>
+<input class="btn btn-sm ${params.value === '🙁' ? 'btn-primary' : 'btn-outline-secondary'}" type="button" value="🙁" disabled/>
+<input class="btn btn-sm ${params.value === '😐' ? 'btn-primary' : 'btn-outline-secondary'}" type="button" value="😐" disabled/>
+<input class="btn btn-sm ${params.value === '😃' ? 'btn-primary' : 'btn-outline-secondary'}" type="button" value="😃" disabled/>
+<input class="btn btn-sm ${params.value === '😄' ? 'btn-primary' : 'btn-outline-secondary'}" type="button" value="😄" disabled/>
+</div>`;
+      return element;
+    }
+  },
   { field: "メモ", filter: false, minWidth: 120, wrapText: true, cellStyle: params => params.value ? { fontSize: "0.7rem" } : null },
   { field: "0", filter: false, sortable: false, cellStyle: params => {
     if(params.value=="sleep")    return styleSleep

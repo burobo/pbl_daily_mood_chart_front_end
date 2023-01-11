@@ -211,7 +211,7 @@ const columnDefs = [
     field: "気分",
     cellRenderer: params => {
       const element = document.createElement('div')
-      element.classList.add('d-flex', 'aligh-item-center', 'justify-content-center')
+      element.classList.add('d-flex', 'align-item-center', 'justify-content-center')
       element.innerHTML = `<div>
 <input class="btn btn-sm ${params.value === '😢' ? 'btn-primary' : 'btn-outline-secondary'}" type="button" value="😢" disabled/>
 <input class="btn btn-sm ${params.value === '🙁' ? 'btn-primary' : 'btn-outline-secondary'}" type="button" value="🙁" disabled/>
