@@ -57,11 +57,11 @@ const { data: rowData, pending: tableRowsPending, error: tableRowsError, refresh
   }
 );
 
-const styleSleep    = { backgroundColor: "#0b3769", fontSize: 0, borderRight: "dotted white" };
-const styleExercise = { backgroundColor: "#F45656", fontSize: 0, borderRight: "dotted white" };
-const styleWork     = { backgroundColor: "#ffc003", fontSize: 0, borderRight: "dotted white" };
-const styleBath     = { backgroundColor: "#3BC1D9", fontSize: 0, borderRight: "dotted white" };
-const styleClinic   = { backgroundColor: "#34a853", fontSize: 0, borderRight: "dotted white" };
+const styleSleep    = { backgroundColor: "rgb(11 55 105 / 60%)", fontSize: 0, borderRight: "dotted white" };
+const styleExercise = { backgroundColor: "rgb(244 86 86 / 60%)", fontSize: 0, borderRight: "dotted white" };
+const styleWork     = { backgroundColor: "rgb(255 192 3 / 60%)", fontSize: 0, borderRight: "dotted white" };
+const styleBath     = { backgroundColor: "rgb(0 191 255 / 60%)", fontSize: 0, borderRight: "dotted white" };
+const styleClinic   = { backgroundColor: "rgb(52 168 83 / 60%)", fontSize: 0, borderRight: "dotted white" };
 
 // Each Column Definition results in one Column.
 const columnDefs = [
